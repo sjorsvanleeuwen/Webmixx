@@ -1,0 +1,56 @@
+{
+    "name": "sjorsvanleeuwen/webmixx",
+    "description": "Awesome CMS with Content Construction Kit features",
+    "keywords": [
+        "sjorsvanleeuwen",
+        "webmixx"
+    ],
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Sjors van Leeuwen",
+            "email": "sjors@sjorsvanleeuwen.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "illuminate/collections": "^8.0",
+        "illuminate/database": "^8.0",
+        "illuminate/support": "^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SjorsvanLeeuwen\\Webmixx\\": "src",
+            "SjorsvanLeeuwen\\Webmixx\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SjorsvanLeeuwen\\Webmixx\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SjorsvanLeeuwen\\Webmixx\\ServiceProvider"
+            ],
+            "aliases": {
+                "Webmixx": "SjorsvanLeeuwen\\Webmixx\\Facade"
+            }
+        }
+    }
+}
