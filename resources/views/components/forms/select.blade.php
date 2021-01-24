@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="{{ $name }}">{{ $label }}</label>
-    <select class="form-control {{ $stateClass() }}" id="{{ $name }}" name="{{ $name }}" @if($hasErrors()) aria-describedby="{{ $name }}Feedback" @endif>
+    <select {{ $attributes }} class="form-control {{ $stateClass() }}" id="{{ $name }}" name="{{ $name }}" @if($hasErrors()) aria-describedby="{{ $name }}Feedback" @endif>
         @if($emptyFirst)
             <option value="" @if($allowEmpty === false) disabled @endif @if($isSelected('')) selected @endif>Please Select</option>
         @endif

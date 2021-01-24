@@ -10,6 +10,8 @@ use SjorsvanLeeuwen\Webmixx\View\Components\Forms\FormButtons;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\InputCheckbox;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\InputText;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\Select;
+use SjorsvanLeeuwen\Webmixx\View\Components\Pages\PageAttribute;
+use SjorsvanLeeuwen\Webmixx\View\Components\Pages\PageAttributeTemplate;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -35,7 +37,7 @@ class ServiceProvider extends BaseServiceProvider
 
             // Publishing assets.
             $this->publishes([
-                __DIR__ . '/../resources/assets' => public_path('vendor/webmixx'),
+                __DIR__ . '/../dist' => public_path('vendor/webmixx'),
             ], 'webmixx-assets');
 
             // Publishing the translation files.
@@ -76,6 +78,8 @@ class ServiceProvider extends BaseServiceProvider
             InputCheckbox::class,
             Select::class,
             FormButtons::class,
+            PageAttributeTemplate::class,
+            PageAttribute::class,
         ]);
     }
 }

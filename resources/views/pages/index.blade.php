@@ -1,7 +1,7 @@
 <x-webmixx::layout>
     <x-webmixx::title-header>
         <x-slot name="buttons">
-            <a href="{{ route('webmixx.pages.create') }}" class="btn btn-sm btn-primary">Add</a>
+            <a href="{{ route('webmixx.pages.create') }}" class="btn btn-sm btn-outline-success"><i class="fas fa-plus"></i></a>
         </x-slot>
         Pages
     </x-webmixx::title-header>
@@ -22,7 +22,11 @@
                 <td>
                     {{ $page->pageTemplate->name }}
                 </td>
-                <td></td>
+                <td class="text-right">
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('webmixx.pages.edit', $page) }}"><i class="far fa-edit"></i></a>
+                    <a class="btn btn-sm btn-outline-danger" href="{{ route('webmixx.pages.destroy', $page) }}"><i class="fas fa-trash-alt"></i></a>
+
+                </td>
             </tr>
         @endforeach
         </tbody>

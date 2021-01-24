@@ -56,6 +56,7 @@ class Page extends Model implements Menuable
             $pageAttributeTemplate = $this
                 ->pageTemplate
                 ->pageAttributeTemplates
+                ->where('page_attribute_template_id', null)
                 ->firstWhere('slug', $key);
 
             $pageAttribute = $this

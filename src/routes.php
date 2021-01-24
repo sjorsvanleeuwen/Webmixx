@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use SjorsvanLeeuwen\Webmixx\Http\Controllers\Api\PageController as ApiPageController;
+use SjorsvanLeeuwen\Webmixx\Http\Controllers\Api\PageTemplateController as ApiPageTemplateController;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\FrontController;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\PageAttributeTemplateController;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\PageController;
@@ -21,6 +23,24 @@ Route::group([
     Route::resource('page_templates', PageTemplateController::class);
     Route::resource('page_attribute_templates', PageAttributeTemplateController::class);
     Route::get('preview/{module}/{id}', [FrontController::class, 'handle'])->name('preview');
+});
+
+Route::group([
+    'prefix' => 'webmixx/api',
+    'as' => 'webmixx.api.',
+    'middleware' => [
+        'web',
+        'auth',
+    ],
+], function (): void {
+    Route::get('page_templates', [
+        ApiPageTemplateController::class,
+        'index',
+    ])->name('page_template.index');
+    Route::get('page/{page}', [
+        ApiPageController::class,
+        'show',
+    ])->name('page.show');
 });
 
 if (app()->environment('local')) {

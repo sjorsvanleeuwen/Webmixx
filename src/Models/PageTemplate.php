@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @package SjorsvanLeeuwen\Webmixx\Models
  *
  * @property int $id
- * @property int $page_template_id
  * @property string $slug
  * @property string $name
  * @property bool $repeatable

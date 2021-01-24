@@ -20,10 +20,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $page_attribute_template_id
  * @property int $page_attribute_id
  * @property mixed $value
+ * @property int $order
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Page $page
  * @property PageAttributeTemplate $pageAttributeTemplate
+ * @property PageAttribute $pageAttribute
  * @property Collection<PageAttribute>|PageAttribute[] $pageAttributes
  */
 class PageAttribute extends Model

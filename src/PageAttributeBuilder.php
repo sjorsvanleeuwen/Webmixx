@@ -16,9 +16,9 @@ class PageAttributeBuilder implements IteratorAggregate
 
     protected PageAttributeTemplate $pageAttributeTemplate;
 
-    protected PageAttribute $pageAttribute;
+    protected ?PageAttribute $pageAttribute;
 
-    public function __construct(Page $page, PageAttributeTemplate $pageAttributeTemplate, PageAttribute $pageAttribute)
+    public function __construct(Page $page, PageAttributeTemplate $pageAttributeTemplate, ?PageAttribute $pageAttribute = null)
     {
         $this->page = $page;
         $this->pageAttributeTemplate = $pageAttributeTemplate;
@@ -42,6 +42,9 @@ class PageAttributeBuilder implements IteratorAggregate
 
     public function __toString(): string
     {
+        if ($this->pageAttribute === null) {
+            return '';
+        }
         return $this->pageAttribute->value;
     }
 
@@ -51,7 +54,7 @@ class PageAttributeBuilder implements IteratorAggregate
             ->page
             ->pageAttributes
             ->where('page_attribute_template_id', $this->pageAttributeTemplate->id)
-            ->where('page_attribute_id', $this->pageAttribute->page_attribute_id);
+            ->where('page_attribute_id', optional($this->pageAttribute)->page_attribute_id);
 
         $collection = new Collection();
 

@@ -1,4 +1,4 @@
-<x-webmixx::layout>
+<x-webmixx::layout :without_vue="true">
     <x-webmixx::title-header>
         <x-slot name="buttons">
             <a href="{{ route('webmixx.page_templates.index') }}" class="btn btn-sm btn-primary">Back</a>
