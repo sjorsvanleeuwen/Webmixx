@@ -1,10 +1,12 @@
 <template>
-    <div :class="'field-' + pageAttributeTemplate.field_type" :data-bound-by="'attributeTemplate' + pageAttributeTemplate.id">
-        <i v-if="pageAttributeTemplate.repeatable" class="fas fa-align-justify handle"></i>
-        <page-attribute-template v-if="childPageAttributeTemplates.length > 0" v-for="childPageAttributeTemplate in childPageAttributeTemplates" v-bind:key="childPageAttributeTemplate.id" :page-template="pageTemplate" :page-attribute-template="childPageAttributeTemplate" :page-attribute="pageAttribute" :base-name="fieldName"/>
-        <typeText v-if="childPageAttributeTemplates.length === 0" :name="fieldName" :label="pageAttributeTemplate.name" :value="pageAttribute.value"/>
-        <div v-if="pageAttributeTemplate.repeatable" class="form-group text-right">
-            <span class="btn btn-sm btn-danger" @click="removePageAttribute">Delete</span>
+    <div :class="'row field-' + pageAttributeTemplate.field_type" :data-bound-by="'attributeTemplate' + pageAttributeTemplate.id">
+        <div class="col">
+            <page-attribute-template v-if="childPageAttributeTemplates.length > 0" v-for="childPageAttributeTemplate in childPageAttributeTemplates" v-bind:key="childPageAttributeTemplate.id" :page-attribute-template="childPageAttributeTemplate" :page-attribute="pageAttribute" :base-name="fieldName"/>
+            <typeText v-if="childPageAttributeTemplates.length === 0" :name="fieldName" :label="pageAttributeTemplate.name" :value="pageAttribute.value"/>
+        </div>
+        <div v-if="pageAttributeTemplate.repeatable" class="col-auto text-right">
+            <span class="btn btn-sm btn-link handle"><i class="fas fa-arrows-alt"></i></span>
+            <span class="btn btn-sm btn-outline-danger" @click="removePageAttribute"><i class="fas fa-trash-alt"></i></span>
         </div>
     </div>
 </template>
@@ -21,10 +23,6 @@ export default {
     },
     props: {
         pageAttributeTemplate: {
-            required: true,
-            type: Object,
-        },
-        pageTemplate: {
             required: true,
             type: Object,
         },
@@ -55,11 +53,14 @@ export default {
         ...mapGetters('pages', [
             'page',
         ]),
+        ...mapGetters('page_templates', [
+            'page_template',
+        ]),
         hasChildPageAttributeTemplates() {
             return this.pageAttributeTemplate.field_type === 'compound';
         },
         childPageAttributeTemplates() {
-            return _.filter(this.pageTemplate.page_attribute_templates, {
+            return _.filter(this.page_template.page_attribute_templates, {
                 page_attribute_template_id: this.pageAttributeTemplate.id,
             });
         },
@@ -75,14 +76,12 @@ export default {
 
 <style scoped>
     .field-compound {
-        padding: 7px;
+        padding: 7px 0px;
         border: 1px solid var(--secondary);
         border-radius: 7px;
         margin-bottom: 7px;
     }
-    .handle {
-        padding-top: 8px;
-        padding-bottom: 8px;
+    .btn .handle {
         cursor: move;
     }
 </style>

@@ -1,11 +1,13 @@
 <template>
     <div :id="'attributeTemplate' + pageAttributeTemplate.id" :class="{ repeatable: pageAttributeTemplate.repeatable }">
         <draggable v-if="pageAttributeTemplate.repeatable" v-model="ownedPageAttributes">
-            <page-attribute v-for="childPageAttribute in ownedPageAttributes" :page-attribute="childPageAttribute" :key="childPageAttribute.id" :page-attribute-template="pageAttributeTemplate" :page-template="pageTemplate" :base-name="baseName"/>
+            <page-attribute v-for="childPageAttribute in ownedPageAttributes" :page-attribute="childPageAttribute" :key="childPageAttribute.id" :page-attribute-template="pageAttributeTemplate" :base-name="baseName"/>
         </draggable>
-        <page-attribute v-else v-for="childPageAttribute in ownedPageAttributes" :page-attribute="childPageAttribute" :key="childPageAttribute.id" :page-attribute-template="pageAttributeTemplate" :page-template="pageTemplate" :base-name="baseName"/>
+        <page-attribute v-else v-for="childPageAttribute in ownedPageAttributes" :page-attribute="childPageAttribute" :key="childPageAttribute.id" :page-attribute-template="pageAttributeTemplate" :base-name="baseName"/>
         <div v-if="pageAttributeTemplate.repeatable" class="form-group text-right">
-            <span class="btn btn-primary" v-text="'Add another ' + pageAttributeTemplate.name" @click="addPageAttribute"></span>
+            <span class="btn btn-sm btn-outline-success" @click="addPageAttribute">
+                <i class="fas fa-plus"></i> {{ pageAttributeTemplate.name}}
+            </span>
         </div>
     </div>
 </template>
@@ -33,10 +35,6 @@ export default {
             required: true,
             type: Object,
         },
-        pageTemplate: {
-            required: true,
-            type: Object,
-        },
         pageAttribute: {
             required: false,
             type: Object,
@@ -56,7 +54,12 @@ export default {
 
     methods: {
         addPageAttribute: function() {
-            let max = _.maxBy(this.page.page_attributes, 'id').id;
+            let max = 0;
+
+            if (this.page.page_attributes.length > 0) {
+                max = _.maxBy(this.page.page_attributes, 'id').id;
+            }
+
             this.page.page_attributes.push({
                 id: max + 1,
                 page_attribute_template_id: this.pageAttributeTemplate.id,
@@ -69,6 +72,9 @@ export default {
     computed: {
         ...mapGetters('pages', [
             'page',
+        ]),
+        ...mapGetters('page_templates', [
+            'page_template',
         ]),
         elementId() {
             return 'attributeTemplate'

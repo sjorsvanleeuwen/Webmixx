@@ -1,7 +1,9 @@
 <template>
-    <div class="form-group">
-        <label :for="name" v-text="label"></label>
-        <input type="text" class="form-control" :id="name" :name="name" :value="value"/>
+    <div class="form-group row">
+        <label :for="name" v-text="label" class="col-3 col-form-label"></label>
+        <div class="col-9">
+            <input type="text" class="form-control" :id="name" :name="name" :value="value"/>
+        </div>
     </div>
 </template>
 

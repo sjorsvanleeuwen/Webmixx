@@ -4,6 +4,7 @@ export default {
     namespaced: true,
     state: () => ({
         page_templates: [],
+        page_template: {},
     }),
     actions: {
         index ({commit}) {
@@ -16,11 +17,17 @@ export default {
     mutations: {
         load (state, page_templates) {
             state.page_templates = page_templates;
-        }
+        },
+        set (state, pageTemplate) {
+            state.page_template = pageTemplate;
+        },
     },
     getters: {
         page_templates (state) {
             return state.page_templates;
+        },
+        page_template (state) {
+            return state.page_template;
         }
     }
 };

@@ -57,6 +57,12 @@ class PageController extends BaseController
 
         $page->save();
 
+        $pageAttributeTemplates = $page->pageTemplate->pageAttributeTemplates;
+
+        foreach($request->input('attributes') as $pageAttributeTemplateId => $value) {
+            $this->saveAttribute($page, $pageAttributeTemplates, $pageAttributeTemplateId, $value);
+        }
+
         return redirect()->route('webmixx.pages.index');
     }
 
