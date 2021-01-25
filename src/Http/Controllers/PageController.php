@@ -155,8 +155,15 @@ class PageController extends BaseController
         }
     }
 
-    public function destroy(Page $page): void
+    public function destroy(Page $page): RedirectResponse
     {
         $this->authorize('delete', $page);
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $page->pageAttributes()->delete();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $page->delete();
+
+        return redirect()->route('webmixx.pages.index');
     }
 }
