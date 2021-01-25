@@ -16,6 +16,7 @@ class CreatePageAttributesTable extends Migration
             $table->bigInteger('page_attribute_template_id')->unsigned();
             $table->bigInteger('page_attribute_id')->unsigned()->nullable();
             $table->longText('value');
+            $table->tinyInteger('order')->unsigned();
             $table->timestamps();
 
             $table->foreign('page_id')->references('id')->on('pages');
