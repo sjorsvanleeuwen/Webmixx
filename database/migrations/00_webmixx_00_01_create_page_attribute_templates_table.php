@@ -17,7 +17,6 @@ class CreatePageAttributeTemplatesTable extends Migration
             $table->string('slug');
             $table->string('name');
             $table->string('field_type');
-            $table->boolean('required');
             $table->boolean('repeatable');
             $table->timestamps();
 

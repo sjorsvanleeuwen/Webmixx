@@ -9,7 +9,6 @@
         <x-webmixx-forms:input-text name="name" label="Naam"/>
         <x-webmixx-forms:select name="field_type" label="Field Type" :options="$fieldTypes->toArray()" />
         <x-webmixx-forms:input-checkbox name="repeatable" label="Repeatable"/>
-        <x-webmixx-forms:input-checkbox name="required" label="Required"/>
         <x-webmixx-forms:form-buttons />
     </form>
 </x-webmixx::layout>

@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $slug
  * @property string $name
  * @property string $field_type
- * @property bool $required
  * @property bool $repeatable
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -39,7 +38,6 @@ class PageAttributeTemplate extends Model
      */
     protected $attributes = [
         'repeatable' => false,
-        'required' => false,
     ];
 
     /**
@@ -49,7 +47,6 @@ class PageAttributeTemplate extends Model
         'name',
         'field_type',
         'repeatable',
-        'required',
     ];
 
     /**
@@ -59,7 +56,6 @@ class PageAttributeTemplate extends Model
         'page_template_id' => 'int',
         'page_attribute_template_id' => 'int',
         'repeatable' => 'bool',
-        'required' => 'bool',
     ];
 
     public function pageTemplate(): BelongsTo

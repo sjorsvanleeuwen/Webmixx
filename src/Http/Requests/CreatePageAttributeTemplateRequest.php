@@ -40,10 +40,6 @@ class CreatePageAttributeTemplateRequest extends FormRequest
                 'string',
                 Rule::in(FieldTypes::getAllTypes()),
             ],
-            'required' => [
-                'nullable',
-                'boolean',
-            ],
             'repeatable' => [
                 'nullable',
                 'boolean',
@@ -57,7 +53,6 @@ class CreatePageAttributeTemplateRequest extends FormRequest
             'page_template_id' => 'Page Template',
             'name' => 'Name',
             'field_type' => 'Field Type',
-            'required' => 'Required',
             'repeatable' => 'Repeatable',
         ];
     }
