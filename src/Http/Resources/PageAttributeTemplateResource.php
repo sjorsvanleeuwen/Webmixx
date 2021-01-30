@@ -11,7 +11,6 @@ class PageAttributeTemplateResource extends JsonResource
 {
     /**
      * @param Request $request
-     * @return array
      */
     public function toArray($request): array
     {

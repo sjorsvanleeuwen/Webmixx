@@ -6,6 +6,7 @@ namespace SjorsvanLeeuwen\Webmixx;
 
 use Illuminate\Support\Collection;
 use IteratorAggregate;
+use SjorsvanLeeuwen\Webmixx\Exceptions\PageAttributeTemplateNotFoundException;
 use SjorsvanLeeuwen\Webmixx\Models\Page;
 use SjorsvanLeeuwen\Webmixx\Models\PageAttribute;
 use SjorsvanLeeuwen\Webmixx\Models\PageAttributeTemplate;
@@ -35,7 +36,12 @@ class PageAttributeBuilder implements IteratorAggregate
             ->pageTemplate
             ->pageAttributeTemplates
             ->where('slug', $name)
-            ->firstWhere('page_attribute_template_id', optional($this->pageAttributeTemplate)->id);
+            ->where('page_attribute_template_id', optional($this->pageAttributeTemplate)->id)
+            ->first();
+
+        if ($pageAttributeTemplate === null) {
+            throw (new PageAttributeTemplateNotFoundException())->setSlug($name, optional($this->pageAttributeTemplate)->slug);
+        }
 
         return new self($this->page, $pageAttributeTemplate, $this->getChildPageAttribute($pageAttributeTemplate));
     }
@@ -71,6 +77,6 @@ class PageAttributeBuilder implements IteratorAggregate
             ->page
             ->pageAttributes
             ->where('page_attribute_template_id', $pageAttributeTemplate->id)
-            ->firstWhere('page_attribute_id', $this->pageAttribute->id);
+            ->firstWhere('page_attribute_id', optional($this->pageAttribute)->id);
     }
 }

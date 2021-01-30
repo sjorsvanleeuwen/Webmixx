@@ -13,7 +13,7 @@ use SjorsvanLeeuwen\Webmixx\ValueObjects\FieldTypes;
 
 class CreatePageRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->user()->can('create', Page::class);
     }
@@ -22,7 +22,7 @@ class CreatePageRequest extends FormRequest
     {
         $attributeRules = [];
 
-        $pageTemplate = PageTemplate::with('pageAttributeTemplates')->where('id', $this->input('page_template_id'))->first();
+        $pageTemplate = PageTemplate::with('pageAttributeTemplates')->where('id', $this->input('page_template_id'))->firstOrFail();
 
         foreach ($pageTemplate->rootPageAttributeTemplates as $pageAttributeTemplate) {
             $this->buildPageAttributeRules($attributeRules, $pageAttributeTemplate, 'attributes');

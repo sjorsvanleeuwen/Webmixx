@@ -14,9 +14,13 @@ use SjorsvanLeeuwen\Webmixx\Models\PageTemplate as PageTemplateModel;
 class PageAttributeTemplate extends Component
 {
     public PageAttributeTemplateModel $pageAttributeTemplate;
+
     public PageTemplateModel $pageTemplate;
+
     public Collection $pageAttributes;
+
     public ?PageAttributeModel $pageAttribute;
+
     public string $baseName;
 
     public function __construct(PageTemplateModel $pageTemplate, PageAttributeTemplateModel $pageAttributeTemplate, Collection $pageAttributes, string $baseName = 'attributes', ?PageAttributeModel $pageAttribute = null)

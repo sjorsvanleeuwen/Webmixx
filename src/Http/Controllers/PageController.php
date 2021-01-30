@@ -8,7 +8,6 @@ use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use SjorsvanLeeuwen\Webmixx\Http\Requests\CreatePageRequest;
 use SjorsvanLeeuwen\Webmixx\Http\Requests\EditPageRequest;
@@ -59,7 +58,7 @@ class PageController extends BaseController
 
         $pageAttributeTemplates = $page->pageTemplate->pageAttributeTemplates;
 
-        foreach($request->input('attributes') as $pageAttributeTemplateId => $value) {
+        foreach ($request->input('attributes') as $pageAttributeTemplateId => $value) {
             $this->saveAttribute($page, $pageAttributeTemplates, $pageAttributeTemplateId, $value);
         }
 
@@ -104,7 +103,7 @@ class PageController extends BaseController
 
         $pageAttributeTemplates = $page->pageTemplate->pageAttributeTemplates;
 
-        foreach($request->input('attributes') as $pageAttributeTemplateId => $value) {
+        foreach ($request->input('attributes') as $pageAttributeTemplateId => $value) {
             $this->saveAttribute($page, $pageAttributeTemplates, $pageAttributeTemplateId, $value);
         }
 
@@ -113,46 +112,6 @@ class PageController extends BaseController
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         return redirect()->route('webmixx.pages.index');
-    }
-
-    /**
-     * @param Page $page
-     * @param Collection $pageAttributeTemplates
-     * @param int $pageAttributeTemplateId
-     * @param array|string $value
-     * @param ?int $parentPageAttributeId
-     * @param int $order
-     */
-    protected function saveAttribute(Page $page, Collection $pageAttributeTemplates, int $pageAttributeTemplateId, $value, ?int $parentPageAttributeId = null, int $order = 0): void
-    {
-        $pageAttributeTemplate = $pageAttributeTemplates->firstWhere('id', $pageAttributeTemplateId);
-
-        if ($pageAttributeTemplate->repeatable && is_numeric(array_key_first($value)) === false) {
-            for ($index = 0; $index < count($value); $index++) {
-                $childValue = array_values($value)[$index];
-                $this->saveAttribute($page, $pageAttributeTemplates, $pageAttributeTemplateId, $childValue, $parentPageAttributeId, $index);
-            }
-        } else if ($pageAttributeTemplate->field_type === FieldTypes::COMPOUND) {
-            $pageAttribute = $page->pageAttributes()->make([
-                'value' => null,
-            ]);
-            $pageAttribute->order = $order;
-            $pageAttribute->page_attribute_template_id = $pageAttributeTemplateId;
-            $pageAttribute->page_attribute_id = $parentPageAttributeId;
-            $pageAttribute->save();
-
-            foreach ($value as $key => $childValue) {
-                $this->saveAttribute($page, $pageAttributeTemplates, $key, $childValue, $pageAttribute->id);
-            }
-        } else {
-            $pageAttribute = $page->pageAttributes()->make([
-                'value' => $value,
-            ]);
-            $pageAttribute->order = $order;
-            $pageAttribute->page_attribute_template_id = $pageAttributeTemplateId;
-            $pageAttribute->page_attribute_id = $parentPageAttributeId;
-            $pageAttribute->save();
-        }
     }
 
     public function destroy(Page $page): RedirectResponse
@@ -165,5 +124,41 @@ class PageController extends BaseController
         $page->delete();
 
         return redirect()->route('webmixx.pages.index');
+    }
+
+    /**
+     * @param array|string $value
+     * @param ?int $parentPageAttributeId
+     */
+    protected function saveAttribute(Page $page, Collection $pageAttributeTemplates, int $pageAttributeTemplateId, $value, ?int $parentPageAttributeId = null, int $order = 0): void
+    {
+        $pageAttributeTemplate = $pageAttributeTemplates->firstWhere('id', $pageAttributeTemplateId);
+
+        if ($pageAttributeTemplate->repeatable && is_array($value) && is_numeric(array_key_first($value)) === false) {
+            for ($index = 0; $index < count($value); $index++) {
+                $childValue = array_values($value)[$index];
+                $this->saveAttribute($page, $pageAttributeTemplates, $pageAttributeTemplateId, $childValue, $parentPageAttributeId, $index);
+            }
+        } elseif ($pageAttributeTemplate->field_type === FieldTypes::COMPOUND && is_array($value)) {
+            $pageAttribute = $page->pageAttributes()->make([
+                'value' => null,
+            ]);
+            $pageAttribute->order = $order;
+            $pageAttribute->page_attribute_template_id = $pageAttributeTemplateId;
+            $pageAttribute->page_attribute_id = $parentPageAttributeId;
+            $pageAttribute->save();
+
+            foreach ($value as $key => $childValue) {
+                $this->saveAttribute($page, $pageAttributeTemplates, intval($key), $childValue, $pageAttribute->id);
+            }
+        } else {
+            $pageAttribute = $page->pageAttributes()->make([
+                'value' => $value,
+            ]);
+            $pageAttribute->order = $order;
+            $pageAttribute->page_attribute_template_id = $pageAttributeTemplateId;
+            $pageAttribute->page_attribute_id = $parentPageAttributeId;
+            $pageAttribute->save();
+        }
     }
 }

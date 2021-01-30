@@ -11,7 +11,6 @@ class PageAttributeResource extends JsonResource
 {
     /**
      * @param Request $request
-     * @return array
      */
     public function toArray($request): array
     {
@@ -24,8 +23,8 @@ class PageAttributeResource extends JsonResource
             'order' => $this->resource->order,
             'page' => new PageTemplateResource($this->whenLoaded('page')),
             'page_attribute_template' => new PageAttributeTemplateResource($this->whenLoaded('pageAttributeTemplate')),
-            'page_attribute' => new PageAttributeResource($this->whenLoaded('pageAttribute')),
-            'page_attributes' => PageAttributeResource::collection($this->whenLoaded('pageAttributes')),
+            'page_attribute' => new self($this->whenLoaded('pageAttribute')),
+            'page_attributes' => self::collection($this->whenLoaded('pageAttributes')),
         ];
     }
 }

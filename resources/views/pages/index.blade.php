@@ -22,7 +22,7 @@
                 <td>
                     {{ $page->pageTemplate->name }}
                 </td>
-                <td class="text-right">
+                <td class="col-auto text-right">
                     <a class="btn btn-sm btn-outline-primary" href="{{ route('webmixx.pages.edit', $page) }}"><i class="far fa-edit"></i></a>
                     <x-webmixx::post-link>
                         <x-slot name="url">{{ route('webmixx.pages.destroy', $page) }}</x-slot>
@@ -30,7 +30,6 @@
                         <x-slot name="classes">btn btn-sm btn-outline-danger</x-slot>
                         <i class="fas fa-trash-alt"></i>
                     </x-webmixx::post-link>
-{{--                    <a class="btn btn-sm btn-outline-danger" href=""><i class="fas fa-trash-alt"></i></a>--}}
 
                 </td>
             </tr>

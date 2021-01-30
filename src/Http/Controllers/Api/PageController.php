@@ -14,6 +14,7 @@ class PageController extends BaseController
     public function show(Page $page): JsonResource
     {
         $page->load('pageAttributes');
+
         return new PageResource($page);
     }
 }

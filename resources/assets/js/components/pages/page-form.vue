@@ -3,7 +3,7 @@
         <input type="hidden" name="_method" :value="httpMethod">
         <input type="hidden" name="_token" :value="csrfToken">
         <div class="form-group row">
-            <label for="name" class="col-3 col-form-label">Naam</label>
+            <label for="name" class="col-3 col-form-label">Name</label>
             <div class="col-9">
                 <input type="text" id="name" name="name" v-model="page.name" class="form-control ">
             </div>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 import _ from 'lodash';
 
 export default {

@@ -8,18 +8,23 @@ use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Illuminate\View\Component;
-use SjorsvanLeeuwen\Webmixx\Models\PageAttributeTemplate as PageAttributeTemplateModel;
 use SjorsvanLeeuwen\Webmixx\Models\PageAttribute as PageAttributeModel;
+use SjorsvanLeeuwen\Webmixx\Models\PageAttributeTemplate as PageAttributeTemplateModel;
 use SjorsvanLeeuwen\Webmixx\Models\PageTemplate as PageTemplateModel;
 use SjorsvanLeeuwen\Webmixx\ValueObjects\FieldTypes;
 
 class PageAttribute extends Component
 {
     public string $key;
+
     public PageTemplateModel $pageTemplate;
+
     public PageAttributeTemplateModel $pageAttributeTemplate;
+
     public Collection $pageAttributes;
+
     public ?PageAttributeModel $pageAttribute;
+
     public string $baseName;
 
     public function __construct(PageTemplateModel $pageTemplate, PageAttributeTemplateModel $pageAttributeTemplate, Collection $pageAttributes, string $baseName, ?PageAttributeModel $pageAttribute = null)

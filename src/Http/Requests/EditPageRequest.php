@@ -4,23 +4,26 @@ declare(strict_types=1);
 
 namespace SjorsvanLeeuwen\Webmixx\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use SjorsvanLeeuwen\Webmixx\Models\Page;
 use SjorsvanLeeuwen\Webmixx\Models\PageAttributeTemplate;
 use SjorsvanLeeuwen\Webmixx\ValueObjects\FieldTypes;
 
 class EditPageRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->user()->can('update', $this->route('page'));
     }
 
-    public function rules()
+    public function rules(): array
     {
         $attributeRules = [];
 
-        foreach ($this->route('page')->pageTemplate->rootPageAttributeTemplates as $pageAttributeTemplate) {
+        /** @var Page $page */
+        $page = $this->route('page');
+
+        foreach ($page->pageTemplate->rootPageAttributeTemplates as $pageAttributeTemplate) {
             $this->buildPageAttributeRules($attributeRules, $pageAttributeTemplate, 'attributes');
         }
 

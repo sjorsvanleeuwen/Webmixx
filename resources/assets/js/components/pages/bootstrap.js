@@ -3,7 +3,7 @@ import PageAttribute from './page-attribute';
 import PageForm from './page-form';
 import Vue from 'vue';
 
-export default function() {
+export default () => {
     Vue.component('pageAttributeTemplate', PageAttributeTemplate);
     Vue.component('pageAttribute', PageAttribute);
     Vue.component('pageForm', PageForm);
