@@ -9,7 +9,7 @@
 
 <script>
 export default {
-    name: "type-text",
+    name: "type-string",
 
     props: {
         name: {

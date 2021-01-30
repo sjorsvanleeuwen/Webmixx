@@ -2,7 +2,7 @@
     <div :class="'row field-' + pageAttributeTemplate.field_type" :data-bound-by="'attributeTemplate' + pageAttributeTemplate.id">
         <div class="col">
             <page-attribute-template v-if="childPageAttributeTemplates.length > 0" v-for="childPageAttributeTemplate in childPageAttributeTemplates" v-bind:key="childPageAttributeTemplate.id" :page-attribute-template="childPageAttributeTemplate" :page-attribute="pageAttribute" :base-name="fieldName"/>
-            <typeText v-if="childPageAttributeTemplates.length === 0" :name="fieldName" :label="pageAttributeTemplate.name" :value="pageAttribute.value"/>
+            <component v-bind:is="fieldTypeComponent" v-if="childPageAttributeTemplates.length === 0" :name="fieldName" :label="pageAttributeTemplate.name" :value="pageAttribute.value" />
         </div>
         <div v-if="pageAttributeTemplate.repeatable" class="col-auto text-right">
             <span class="btn btn-sm btn-link handle"><i class="fas fa-arrows-alt"></i></span>
@@ -13,14 +13,11 @@
 
 <script>
 import _ from 'lodash';
-import typeText from "../field_types/type-text";
 import {mapGetters} from "vuex";
 
 export default {
     name: "pageAttribute",
-    components: {
-        typeText,
-    },
+
     props: {
         pageAttributeTemplate: {
             required: true,
@@ -69,6 +66,9 @@ export default {
                 return this.baseName + '[' + this.pageAttributeTemplate.id + '][U' + this._uid + ']';
             }
             return this.baseName + '[' + this.pageAttributeTemplate.id + ']';
+        },
+        fieldTypeComponent() {
+            return 'type' + _.replace(_.startCase(this.pageAttributeTemplate.field_type), ' ', '');
         }
     },
 }
