@@ -8,6 +8,11 @@
             <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="{{ route('webmixx.dashboard') }}">Home</a>
             </li>
+            @can('viewAny', \SjorsvanLeeuwen\Webmixx\Models\Menu::class)
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ route('webmixx.menus.index') }}">Menus</a>
+                </li>
+            @endcan
             @can('viewAny', \SjorsvanLeeuwen\Webmixx\Models\Page::class)
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{{ route('webmixx.pages.index') }}">Pages</a>

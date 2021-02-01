@@ -6,9 +6,18 @@ use Illuminate\Support\Facades\Route;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\Api\PageController as ApiPageController;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\Api\PageTemplateController as ApiPageTemplateController;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\FrontController;
+use SjorsvanLeeuwen\Webmixx\Http\Controllers\MenuController;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\PageAttributeTemplateController;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\PageController;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\PageTemplateController;
+
+Route::group([
+    'middleware' => [
+        'web'
+    ],
+], function(): void {
+    Route::fallback([FrontController::class, 'handle']);
+});
 
 Route::group([
     'prefix' => 'webmixx',
@@ -19,10 +28,11 @@ Route::group([
     ],
 ], function (): void {
     Route::view('dashboard', 'webmixx::dashboard')->name('dashboard');
+    Route::resource('menus', MenuController::class);
     Route::resource('pages', PageController::class);
     Route::resource('page_templates', PageTemplateController::class);
     Route::resource('page_attribute_templates', PageAttributeTemplateController::class);
-    Route::get('preview/{module}/{id}', [FrontController::class, 'handle'])->name('preview');
+    Route::get('preview/{module}/{id}', [FrontController::class, 'preview'])->name('preview');
 });
 
 Route::group([

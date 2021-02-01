@@ -10,6 +10,7 @@ use SjorsvanLeeuwen\Webmixx\View\Components\Forms\FormButtons;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\InputCheckbox;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\InputText;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\Select;
+use SjorsvanLeeuwen\Webmixx\View\Components\Menus\Menu;
 use SjorsvanLeeuwen\Webmixx\View\Components\Pages\PageAttribute;
 use SjorsvanLeeuwen\Webmixx\View\Components\Pages\PageAttributeTemplate;
 
@@ -74,12 +75,18 @@ class ServiceProvider extends BaseServiceProvider
     protected function bootComponents(): void
     {
         $this->loadViewComponentsAs('webmixx', [
+            // Forms
             InputText::class,
             InputCheckbox::class,
             Select::class,
             FormButtons::class,
+
+            // Admin page
             PageAttributeTemplate::class,
             PageAttribute::class,
+
+            // Front Menu
+            Menu::class,
         ]);
     }
 }

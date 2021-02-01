@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SjorsvanLeeuwen\Webmixx\View\Components\Forms;
 
-use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Http\Request;
 use Illuminate\View\Component;
 
@@ -28,7 +28,7 @@ class InputText extends Component
         $this->value = strval($this->request->old($this->name, $value));
     }
 
-    public function render(): View
+    public function render(): ViewContract
     {
         return view('webmixx::components.forms.input-text');
     }

@@ -5,11 +5,27 @@ declare(strict_types=1);
 namespace SjorsvanLeeuwen\Webmixx\Http\Controllers;
 
 use Illuminate\Contracts\View\View as ViewContract;
+use SjorsvanLeeuwen\Webmixx\Models\MenuItem;
 use SjorsvanLeeuwen\Webmixx\Models\Page;
 
 class FrontController extends BaseController
 {
-    public function handle(string $module, int $id): ViewContract
+    public function handle(string $fallbackPlaceholder): ViewContract
+    {
+        // look it up in menuItems
+        $menuItem = MenuItem::where('full_slug', $fallbackPlaceholder)->first();
+
+        if ($menuItem) {
+            $moduleName = (new \ReflectionClass($menuItem->link))->getShortName();
+            $functionName = 'show' . $moduleName;
+
+            return $this->$functionName($menuItem->link_id);
+        }
+
+        return view('webmixx::dashboard');
+    }
+
+    public function preview(string $module, int $id): ViewContract
     {
         return $this->showPage($id);
     }

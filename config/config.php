@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+use SjorsvanLeeuwen\Webmixx\Models\Menu;
 use SjorsvanLeeuwen\Webmixx\Models\Page;
 use SjorsvanLeeuwen\Webmixx\Models\PageAttributeTemplate;
 use SjorsvanLeeuwen\Webmixx\Models\PageTemplate;
+use SjorsvanLeeuwen\Webmixx\Policies\MenuPolicy;
 use SjorsvanLeeuwen\Webmixx\Policies\PageAttributeTemplatePolicy;
 use SjorsvanLeeuwen\Webmixx\Policies\PagePolicy;
 use SjorsvanLeeuwen\Webmixx\Policies\PageTemplatePolicy;
@@ -23,6 +25,7 @@ return [
         ],
     ],
     'policyBindings' => [
+        Menu::class => MenuPolicy::class,
         Page::class => PagePolicy::class,
         PageAttributeTemplate::class => PageAttributeTemplatePolicy::class,
         PageTemplate::class => PageTemplatePolicy::class,
