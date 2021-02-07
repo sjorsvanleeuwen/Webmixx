@@ -19,7 +19,8 @@ return [
         //    'title' => 'My Module',
         //    'model' => Model::class,
         //],
-        Page::moduleName() => [
+        [
+            'id' => Page::moduleName(),
             'title' => 'Page',
             'model' => Page::class,
         ],

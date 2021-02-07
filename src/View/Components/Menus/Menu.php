@@ -26,7 +26,7 @@ class Menu extends Component
         $template_path = config('webmixx.templateBasePath') . '.menus.' . $this->menu->slug;
 
         return view($template_path, [
-            'menuItems' => $this->menu->rootMenuItems
+            'menuItems' => $this->menu->rootMenuItems,
         ]);
     }
 

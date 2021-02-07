@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace SjorsvanLeeuwen\Webmixx\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use SjorsvanLeeuwen\Webmixx\Models\Menu;
 
-class CreateMenuRequest extends FormRequest
+class CreateMenuItemRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -23,13 +24,16 @@ class CreateMenuRequest extends FormRequest
                 'min:3',
                 'max:255',
             ],
-        ];
-    }
-
-    public function attributes(): array
-    {
-        return [
-            'name' => 'Name',
+            'link_type' => [
+                'required',
+                'string',
+                Rule::in(app('webmixx')->getMenuModules()->pluck('id')),
+            ],
+            'link_id' => [
+                'required',
+                'int',
+                'min:1',
+            ],
         ];
     }
 }

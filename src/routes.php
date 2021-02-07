@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use SjorsvanLeeuwen\Webmixx\Http\Controllers\Api\LinkTypeController as ApiLinkTypeController;
+use SjorsvanLeeuwen\Webmixx\Http\Controllers\Api\MenuController as ApiMenuController;
+use SjorsvanLeeuwen\Webmixx\Http\Controllers\Api\MenuItemController as ApiMenuItemController;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\Api\PageController as ApiPageController;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\Api\PageTemplateController as ApiPageTemplateController;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\FrontController;
@@ -13,9 +16,9 @@ use SjorsvanLeeuwen\Webmixx\Http\Controllers\PageTemplateController;
 
 Route::group([
     'middleware' => [
-        'web'
+        'web',
     ],
-], function(): void {
+], function (): void {
     Route::fallback([FrontController::class, 'handle']);
 });
 
@@ -43,10 +46,31 @@ Route::group([
         'auth',
     ],
 ], function (): void {
+    Route::get('link_types', [
+        ApiLinkTypeController::class,
+        'index',
+    ])->name('link_types.index');
+
+    Route::get('link_types/{link_type}', [
+        ApiLinkTypeController::class,
+        'show',
+    ])->name('link_types.show');
+
+    Route::get('menu/{menu}', [
+        ApiMenuController::class,
+        'show',
+    ])->name('menu.show');
+
+    Route::post('menu/{menu}/menu_item', [
+        ApiMenuItemController::class,
+        'store',
+    ])->name('menu.menu_item.store');
+
     Route::get('page_templates', [
         ApiPageTemplateController::class,
         'index',
     ])->name('page_template.index');
+
     Route::get('page/{page}', [
         ApiPageController::class,
         'show',

@@ -61,7 +61,7 @@ class ServiceProvider extends BaseServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('webmixx', function () {
-            return new Webmixx();
+            return new Webmixx($this->app);
         });
     }
 

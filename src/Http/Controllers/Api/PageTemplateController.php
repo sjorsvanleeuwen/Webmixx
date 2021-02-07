@@ -13,6 +13,8 @@ class PageTemplateController extends BaseController
 {
     public function index(): JsonResource
     {
+        $this->authorize('viewAny', PageTemplate::class);
+
         $pageTemplates = PageTemplate::with('pageAttributeTemplates')->get();
 
         return PageTemplateResource::collection($pageTemplates);

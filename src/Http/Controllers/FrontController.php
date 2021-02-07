@@ -10,16 +10,16 @@ use SjorsvanLeeuwen\Webmixx\Models\Page;
 
 class FrontController extends BaseController
 {
-    public function handle(string $fallbackPlaceholder): ViewContract
+    public function handle(?string $fallbackPlaceholder = null): ViewContract
     {
         // look it up in menuItems
-        $menuItem = MenuItem::where('full_slug', $fallbackPlaceholder)->first();
+        $menuItem = MenuItem::where('full_slug', '/' . $fallbackPlaceholder ?? '/')->first();
 
         if ($menuItem) {
             $moduleName = (new \ReflectionClass($menuItem->link))->getShortName();
             $functionName = 'show' . $moduleName;
 
-            return $this->$functionName($menuItem->link_id);
+            return $this->{$functionName}($menuItem->link_id);
         }
 
         return view('webmixx::dashboard');

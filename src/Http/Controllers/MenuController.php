@@ -7,9 +7,12 @@ namespace SjorsvanLeeuwen\Webmixx\Http\Controllers;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use SjorsvanLeeuwen\Webmixx\Http\Requests\CreateMenuRequest;
+use SjorsvanLeeuwen\Webmixx\Http\Requests\EditMenuRequest;
 use SjorsvanLeeuwen\Webmixx\Models\Menu;
+use SjorsvanLeeuwen\Webmixx\Models\MenuItem;
 
 class MenuController extends BaseController
 {
@@ -44,23 +47,55 @@ class MenuController extends BaseController
         return redirect()->route('webmixx.menus.index');
     }
 
-    public function show(Menu $menu): void
+    public function show(Menu $menu): ViewContract
     {
+        $this->authorize('view', $menu);
 
+        return view('webmixx::menus.show', compact('menu'));
     }
 
     public function edit(Menu $menu): void
     {
-
     }
 
-    public function update(Menu $menu): void
+    public function update(EditMenuRequest $request, Menu $menu): RedirectResponse
     {
+        $this->authorize('update', $menu);
 
+        $this->saveMenuItems($request->validated()['menu_items']);
+
+        return redirect()->route('webmixx.menus.show', $menu);
     }
 
     public function destroy(Menu $menu): void
     {
+    }
 
+    protected function saveMenuItems(array $menuItems, ?int $parent_id = null, string $root = '/'): void
+    {
+        foreach (array_values($menuItems) as $index => $menuItemData) {
+            $is_home = $parent_id === null && $index === 0;
+
+            /** @var MenuItem $menuItem */
+            $menuItem = MenuItem::find($menuItemData['id']);
+            $menuItem->order = $index;
+            $menuItem->menu_item_id = $parent_id;
+            if ($is_home) {
+                $menuItem->full_slug = $root;
+            } else {
+                $menuItem->full_slug = $root . $menuItem->slug;
+            }
+            $menuItem->save();
+
+            if ($is_home) {
+                $new_root = $root;
+                $new_parent_id = null;
+            } else {
+                $new_root = $menuItem->full_slug . '/';
+                $new_parent_id = $menuItem->id;
+            }
+
+            $this->saveMenuItems(Arr::get($menuItemData, 'menu_items', []), $new_parent_id, $new_root);
+        }
     }
 }

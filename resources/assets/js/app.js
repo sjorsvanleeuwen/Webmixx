@@ -16,9 +16,11 @@ import CKEditor from '@ckeditor/ckeditor5-vue2';
 Vue.use(CKEditor);
 
 import bootstrapPages from "./components/pages/bootstrap";
+import bootstrapMenus from "./components/menus/bootstrap";
 
 if ($('#app').hasClass('no-vue') === false) {
     bootstrapPages();
+    bootstrapMenus();
 
     new Vue({
         el: '#app',

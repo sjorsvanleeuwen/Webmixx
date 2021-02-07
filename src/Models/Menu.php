@@ -35,11 +35,11 @@ class Menu extends Model
 
     public function menuItems(): HasMany
     {
-        return $this->hasMany(MenuItem::class);
+        return $this->hasMany(MenuItem::class)->orderBy('order');
     }
 
     public function rootMenuItems(): HasMany
     {
-        return $this->hasMany(MenuItem::class)->whereNull('menu_item_id');
+        return $this->hasMany(MenuItem::class)->whereNull('menu_item_id')->orderBy('order');
     }
 }

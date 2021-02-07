@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string $slug
  * @property string $name
  * @property string $full_slug
+ * @property int $order
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Model $link
@@ -59,6 +60,6 @@ class MenuItem extends Model
 
     public function menuItems(): HasMany
     {
-        return $this->hasMany(self::class);
+        return $this->hasMany(self::class)->orderBy('order');
     }
 }

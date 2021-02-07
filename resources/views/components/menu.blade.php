@@ -29,5 +29,10 @@
                 </li>
             @endcan
         </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/">View website</a>
+            </li>
+        </ul>
     </div>
 </nav>

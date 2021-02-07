@@ -18,10 +18,12 @@ class CreateMenuItemsTable extends Migration
             $table->string('slug');
             $table->string('name');
             $table->string('full_slug');
+            $table->tinyInteger('order')->unsigned();
             $table->timestamps();
 
             $table->foreign('menu_id')->references('id')->on('menus');
             $table->foreign('menu_item_id')->references('id')->on('menu_items');
+            $table->unique(['menu_id', 'link_type', 'link_id']);
         });
     }
 
