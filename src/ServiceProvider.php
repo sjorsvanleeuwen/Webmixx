@@ -16,7 +16,7 @@ use SjorsvanLeeuwen\Webmixx\View\Components\Pages\PageAttributeTemplate;
 
 class ServiceProvider extends BaseServiceProvider
 {
-    public function boot(): void
+    public function boot(Webmixx $webmixx): void
     {
         /*
          * Optional methods to load your package assets
@@ -50,7 +50,7 @@ class ServiceProvider extends BaseServiceProvider
             // $this->commands([]);
         }
 
-        $this->bootPolicies();
+        $this->bootPolicies($webmixx);
         $this->bootComponents();
     }
 
@@ -65,9 +65,9 @@ class ServiceProvider extends BaseServiceProvider
         });
     }
 
-    protected function bootPolicies(): void
+    protected function bootPolicies(Webmixx $webmixx): void
     {
-        foreach (config('webmixx.policyBindings') as $model => $policy) {
+        foreach ($webmixx->getPolicyBindings() as $model => $policy) {
             Gate::policy($model, $policy);
         }
     }

@@ -9,21 +9,25 @@ use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 use SjorsvanLeeuwen\Webmixx\Models\Menu as MenuModel;
 use SjorsvanLeeuwen\Webmixx\Models\MenuItem;
+use SjorsvanLeeuwen\Webmixx\Webmixx;
 
 class Menu extends Component
 {
     public MenuModel $menu;
 
-    public function __construct(string $menu)
+    protected Webmixx $webmixx;
+
+    public function __construct(Webmixx $webmixx, string $menu)
     {
+        $this->webmixx = $webmixx;
+
         $this->menu = MenuModel::query()->where('slug', $menu)
             ->with('menuItems')->firstOrFail();
     }
 
     public function render(): ViewContract
     {
-        /** @phpstan-var view-string $template_path */
-        $template_path = config('webmixx.templateBasePath') . '.menus.' . $this->menu->slug;
+        $template_path = $this->webmixx->getTemplateViewPath(self::moduleName(), $this->menu->slug);
 
         return view($template_path, [
             'menuItems' => $this->menu->rootMenuItems,
@@ -38,5 +42,10 @@ class Menu extends Component
     public function getChildItems(MenuItem $menuItem): Collection
     {
         return $this->menu->menuItems->where('menu_item_id', $menuItem->id);
+    }
+
+    public static function moduleName(): string
+    {
+        return 'menu';
     }
 }

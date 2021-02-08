@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SjorsvanLeeuwen\Webmixx\Http\Controllers\Api;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use SjorsvanLeeuwen\Webmixx\Exceptions\MenuModuleNotFoundException;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\BaseController;
 use SjorsvanLeeuwen\Webmixx\Http\Resources\LinkModelResource;
 use SjorsvanLeeuwen\Webmixx\Http\Resources\LinkTypeResource;

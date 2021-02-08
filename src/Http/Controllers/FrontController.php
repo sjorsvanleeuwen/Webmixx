@@ -7,9 +7,17 @@ namespace SjorsvanLeeuwen\Webmixx\Http\Controllers;
 use Illuminate\Contracts\View\View as ViewContract;
 use SjorsvanLeeuwen\Webmixx\Models\MenuItem;
 use SjorsvanLeeuwen\Webmixx\Models\Page;
+use SjorsvanLeeuwen\Webmixx\Webmixx;
 
 class FrontController extends BaseController
 {
+    protected Webmixx $webmixx;
+
+    public function __construct(Webmixx $webmixx)
+    {
+        $this->webmixx = $webmixx;
+    }
+
     public function handle(?string $fallbackPlaceholder = null): ViewContract
     {
         // look it up in menuItems
@@ -35,8 +43,7 @@ class FrontController extends BaseController
         /** @var Page $page */
         $page = Page::with('pageTemplate', 'pageTemplate.pageAttributeTemplates', 'pageAttributes')->find($id);
 
-        /** @phpstan-var view-string $template_path */
-        $template_path = config('webmixx.templateBasePath') . '.pages.' . $page->pageTemplate->slug;
+        $template_path = $this->webmixx->getTemplateViewPath(Page::moduleName(), $page->pageTemplate->slug);
 
         return view($template_path, compact('page'));
     }

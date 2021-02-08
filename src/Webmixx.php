@@ -41,4 +41,17 @@ class Webmixx
         }
         return $menuModule['model'];
     }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getPolicyBindings(): array
+    {
+        return config('webmixx.policyBIndings', []);
+    }
+
+    public function getTemplateViewPath(string $module, string $template_name): string
+    {
+        return config('webmixx.templateBasePath', 'webmixx_templates') . '.' . $module . '.' . $template_name;
+    }
 }
