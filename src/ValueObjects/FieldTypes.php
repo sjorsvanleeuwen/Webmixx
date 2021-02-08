@@ -8,6 +8,8 @@ use Illuminate\Support\Collection;
 
 class FieldTypes
 {
+    public const IMAGE = 'image';
+
     public const STRING = 'string';
 
     public const TEXT = 'text';
@@ -25,6 +27,7 @@ class FieldTypes
             self::STRING,
             self::TEXT,
             self::RICH_TEXT,
+            self::IMAGE,
             self::COMPOUND,
         ];
     }
@@ -38,6 +41,7 @@ class FieldTypes
             self::STRING => 'String',
             self::TEXT => 'Text',
             self::RICH_TEXT => 'Rich Text',
+            self::IMAGE => 'Image',
             self::COMPOUND => 'Compound',
         ]);
     }

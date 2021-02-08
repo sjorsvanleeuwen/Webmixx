@@ -7,16 +7,26 @@ namespace SjorsvanLeeuwen\Webmixx\Http\Controllers;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use SjorsvanLeeuwen\Webmixx\Http\Requests\CreatePageRequest;
 use SjorsvanLeeuwen\Webmixx\Http\Requests\EditPageRequest;
 use SjorsvanLeeuwen\Webmixx\Models\Page;
 use SjorsvanLeeuwen\Webmixx\Models\PageTemplate;
 use SjorsvanLeeuwen\Webmixx\ValueObjects\FieldTypes;
+use SjorsvanLeeuwen\Webmixx\Webmixx;
 
 class PageController extends BaseController
 {
+    protected Webmixx $webmixx;
+
+    public function __construct(Webmixx $webmixx)
+    {
+        $this->webmixx = $webmixx;
+    }
+
     public function index(): ViewContract
     {
         $this->authorize('viewAny', Page::class);
@@ -103,7 +113,7 @@ class PageController extends BaseController
 
         $pageAttributeTemplates = $page->pageTemplate->pageAttributeTemplates;
 
-        foreach ($request->input('attributes') as $pageAttributeTemplateId => $value) {
+        foreach ($request->all('attributes')['attributes'] as $pageAttributeTemplateId => $value) {
             $this->saveAttribute($page, $pageAttributeTemplates, $pageAttributeTemplateId, $value);
         }
 
@@ -127,7 +137,7 @@ class PageController extends BaseController
     }
 
     /**
-     * @param array|string $value
+     * @param array|string|UploadedFile $value
      * @param ?int $parentPageAttributeId
      */
     protected function saveAttribute(Page $page, Collection $pageAttributeTemplates, int $pageAttributeTemplateId, $value, ?int $parentPageAttributeId = null, int $order = 0): void
@@ -151,6 +161,22 @@ class PageController extends BaseController
             foreach ($value as $key => $childValue) {
                 $this->saveAttribute($page, $pageAttributeTemplates, intval($key), $childValue, $pageAttribute->id);
             }
+        } elseif ($pageAttributeTemplate->field_type === FieldTypes::IMAGE) {
+            if ($value instanceof UploadedFile) {
+                $filename = Str::random(32);
+                $disk = $this->webmixx->getPublicUploadDisk();
+                $path = $disk->putFileAs($this->webmixx->getUploadDirectory(), $value, $filename . '.' . $value->extension());
+            } else {
+                $path = $value;
+            }
+
+            $pageAttribute = $page->pageAttributes()->make([
+                'value' => $path,
+            ]);
+            $pageAttribute->order = $order;
+            $pageAttribute->page_attribute_template_id = $pageAttributeTemplateId;
+            $pageAttribute->page_attribute_id = $parentPageAttributeId;
+            $pageAttribute->save();
         } else {
             $pageAttribute = $page->pageAttributes()->make([
                 'value' => $value,

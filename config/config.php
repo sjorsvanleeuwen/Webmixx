@@ -31,4 +31,9 @@ return [
         PageAttributeTemplate::class => PageAttributeTemplatePolicy::class,
         PageTemplate::class => PageTemplatePolicy::class,
     ],
+    'uploads' => [
+        'disk' => 'local',
+        'public_disk' => 'public',
+        'directory' => 'webmixx',
+    ],
 ];

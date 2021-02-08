@@ -77,6 +77,7 @@ class CreatePageRequest extends FormRequest
                     'max:255',
                 ];
                 break;
+            case FieldTypes::TEXT:
             case FieldTypes::RICH_TEXT:
                 $attributeRules[$base] = [
                     'required',
@@ -84,6 +85,13 @@ class CreatePageRequest extends FormRequest
                     'min:5',
                 ];
                 break;
+            case FieldTypes::IMAGE:
+                $attributeRules[$base] = [
+                    'required',
+                    'file',
+                    'image',
+                    'max:3072',
+                ];
         }
     }
 }

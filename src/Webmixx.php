@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace SjorsvanLeeuwen\Webmixx;
 
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use SjorsvanLeeuwen\Webmixx\Exceptions\MenuModuleNotFoundException;
 
 class Webmixx
@@ -53,5 +55,15 @@ class Webmixx
     public function getTemplateViewPath(string $module, string $template_name): string
     {
         return config('webmixx.templateBasePath', 'webmixx_templates') . '.' . $module . '.' . $template_name;
+    }
+
+    public function getPublicUploadDisk(): Filesystem
+    {
+        return Storage::disk(config('webmixx.uploads.public_disk'));
+    }
+
+    public function getUploadDirectory(): string
+    {
+        return config('webmixx.uploads.directory');
     }
 }

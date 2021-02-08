@@ -63,6 +63,7 @@ class EditPageRequest extends FormRequest
                     'max:255',
                 ];
                 break;
+            case FieldTypes::TEXT:
             case FieldTypes::RICH_TEXT:
                 $attributeRules[$base] = [
                     'required',
@@ -70,6 +71,10 @@ class EditPageRequest extends FormRequest
                     'min:5',
                 ];
                 break;
+            case FieldTypes::IMAGE:
+                $attributeRules[$base] = [
+                    'required',
+                ];
         }
     }
 }

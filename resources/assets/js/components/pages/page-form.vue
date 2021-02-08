@@ -1,5 +1,5 @@
 <template>
-    <form method="post" :action="httpUrl">
+    <form method="post" :action="httpUrl" enctype="multipart/form-data">
         <input type="hidden" name="_method" :value="httpMethod">
         <input type="hidden" name="_token" :value="csrfToken">
         <div class="form-group row">
@@ -82,9 +82,9 @@ export default {
             if (this.page_template === undefined) {
                 return [];
             }
-            return _.filter(this.page_template.page_attribute_templates, {
+            return _.orderBy(_.filter(this.page_template.page_attribute_templates, {
                 page_attribute_template_id: null,
-            });
+            }), 'order');
         }
     }
 }

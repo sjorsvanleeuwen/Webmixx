@@ -57,9 +57,9 @@ export default {
             return this.pageAttributeTemplate.field_type === 'compound';
         },
         childPageAttributeTemplates() {
-            return _.filter(this.page_template.page_attribute_templates, {
+            return _.orderBy(_.filter(this.page_template.page_attribute_templates, {
                 page_attribute_template_id: this.pageAttributeTemplate.id,
-            });
+            }), 'order');
         },
         fieldName() {
             if (this.pageAttributeTemplate.repeatable) {

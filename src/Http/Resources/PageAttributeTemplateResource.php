@@ -22,6 +22,7 @@ class PageAttributeTemplateResource extends JsonResource
             'name' => $this->resource->name,
             'field_type' => $this->resource->field_type,
             'repeatable' => $this->resource->repeatable,
+            'order' => $this->resource->order,
             'page_template' => new PageTemplateResource($this->whenLoaded('pageTemplate')),
         ];
     }
