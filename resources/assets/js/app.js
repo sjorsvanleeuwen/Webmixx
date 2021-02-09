@@ -27,3 +27,7 @@ if ($('#app').hasClass('no-vue') === false) {
         store: Store,
     });
 }
+
+import bootstrap from './bootstrap';
+
+bootstrap.bootEditor();

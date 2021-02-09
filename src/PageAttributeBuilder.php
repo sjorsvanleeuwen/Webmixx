@@ -10,6 +10,7 @@ use SjorsvanLeeuwen\Webmixx\Exceptions\PageAttributeTemplateNotFoundException;
 use SjorsvanLeeuwen\Webmixx\Models\Page;
 use SjorsvanLeeuwen\Webmixx\Models\PageAttribute;
 use SjorsvanLeeuwen\Webmixx\Models\PageAttributeTemplate;
+use SjorsvanLeeuwen\Webmixx\ValueObjects\FieldTypes;
 
 class PageAttributeBuilder implements IteratorAggregate
 {
@@ -56,6 +57,25 @@ class PageAttributeBuilder implements IteratorAggregate
 
     public function getIterator(): Collection
     {
+        if ($this->pageAttributeTemplate->repeatable) {
+            return $this->iteratorRepeatable();
+        } elseif ($this->pageAttributeTemplate->field_type === FieldTypes::MODULE_SET) {
+            return $this->iteratorModuleSet();
+        }
+        return collect([1,2,3]);
+    }
+
+    protected function getChildPageAttribute(PageAttributeTemplate $pageAttributeTemplate): PageAttribute
+    {
+        return $this
+            ->page
+            ->pageAttributes
+            ->where('page_attribute_template_id', $pageAttributeTemplate->id)
+            ->firstWhere('page_attribute_id', optional($this->pageAttribute)->id);
+    }
+
+    protected function iteratorRepeatable(): Collection
+    {
         $attributes = $this
             ->page
             ->pageAttributes
@@ -71,12 +91,10 @@ class PageAttributeBuilder implements IteratorAggregate
         return $collection;
     }
 
-    protected function getChildPageAttribute(PageAttributeTemplate $pageAttributeTemplate): PageAttribute
+    protected function iteratorModuleSet(): Collection
     {
-        return $this
-            ->page
-            ->pageAttributes
-            ->where('page_attribute_template_id', $pageAttributeTemplate->id)
-            ->firstWhere('page_attribute_id', optional($this->pageAttribute)->id);
+        $dataProvider = new $this->pageAttributeTemplate->data_provider;
+
+        return $dataProvider->getIterator();
     }
 }

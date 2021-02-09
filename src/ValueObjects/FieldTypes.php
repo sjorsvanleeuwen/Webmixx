@@ -8,15 +8,19 @@ use Illuminate\Support\Collection;
 
 class FieldTypes
 {
+    public const COMPOUND = 'compound';
+
     public const IMAGE = 'image';
+
+    public const MODULE_ITEM = 'module_item';
+
+    public const MODULE_SET = 'module_set';
+
+    public const RICH_TEXT = 'rich_text';
 
     public const STRING = 'string';
 
     public const TEXT = 'text';
-
-    public const RICH_TEXT = 'rich_text';
-
-    public const COMPOUND = 'compound';
 
     /**
      * @return string[]
@@ -24,11 +28,13 @@ class FieldTypes
     public static function getAllTypes(): array
     {
         return [
+            self::COMPOUND,
+            self::IMAGE,
+            self::MODULE_ITEM,
+            self::MODULE_SET,
+            self::RICH_TEXT,
             self::STRING,
             self::TEXT,
-            self::RICH_TEXT,
-            self::IMAGE,
-            self::COMPOUND,
         ];
     }
 
@@ -42,6 +48,8 @@ class FieldTypes
             self::TEXT => 'Text',
             self::RICH_TEXT => 'Rich Text',
             self::IMAGE => 'Image',
+            self::MODULE_ITEM => 'Module Item',
+            self::MODULE_SET => 'Module Set',
             self::COMPOUND => 'Compound',
         ]);
     }
