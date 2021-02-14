@@ -5,10 +5,5 @@
         </x-slot>
         Menu "{{ $menu->name }}"
     </x-webmixx::title-header>
-    <form action="{{ route('webmixx.menus.update', $menu) }}" method="post">
-        @csrf
-        @method('put')
-        <menu-builder class="mb-2" :menu-id="{{ $menu->id }}"></menu-builder>
-        <x-webmixx-forms:form-buttons />
-    </form>
+    <menu-builder class="mb-2" :menu-id="{{ $menu->id }}"></menu-builder>
 </x-webmixx::layout>

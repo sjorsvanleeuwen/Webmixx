@@ -54,23 +54,6 @@ class MenuController extends BaseController
         return view('webmixx::menus.show', compact('menu'));
     }
 
-    public function edit(Menu $menu): void
-    {
-    }
-
-    public function update(EditMenuRequest $request, Menu $menu): RedirectResponse
-    {
-        $this->authorize('update', $menu);
-
-        $this->saveMenuItems($request->validated()['menu_items']);
-
-        return redirect()->route('webmixx.menus.show', $menu);
-    }
-
-    public function destroy(Menu $menu): void
-    {
-    }
-
     protected function saveMenuItems(array $menuItems, ?int $parent_id = null, string $root = '/'): void
     {
         foreach (array_values($menuItems) as $index => $menuItemData) {

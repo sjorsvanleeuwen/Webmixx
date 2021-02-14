@@ -12,6 +12,16 @@ const mapMenuItems = function(menuItems, parentMenuItemId) {
     return menu_items;
 };
 
+const removeDeep = function(menuItems, deleteMenuItem) {
+    _.each(menuItems, (menuItem) => {
+        if (menuItem.id === deleteMenuItem.menu_item_id) {
+            _.remove(menuItem.menu_items, {'id': deleteMenuItem.id});
+        } else if (menuItem.menu_items.length > 0) {
+            removeDeep(menuItem.menu_items, deleteMenuItem);
+        }
+    });
+};
+
 export default {
     namespaced: true,
     state: () => ({
@@ -28,8 +38,8 @@ export default {
                     });
             });
         },
-        updateMenuItems({ commit }, payload) {
-            commit('updateMenuItems', payload);
+        setMenuItems({ commit }, payload) {
+            commit('setMenuItems', payload);
         },
         addMenuItem({ commit }, payload) {
             return new Promise((resolve, reject) => {
@@ -40,17 +50,47 @@ export default {
                     });
             });
         },
+        updateMenuItem({ commit }, payload) {
+            return new Promise((resolve, reject) => {
+                Axios.put('/webmixx/api/menu/' + payload.menuItem.menu_id + '/menu_item/' + payload.menuItem.id, {
+                    name: payload.menuItem.name,
+                    order: payload.order,
+                    menu_item_id: payload.to_menu_item_id,
+                })
+                    .then((response) => {
+                        resolve();
+                    });
+            });
+        },
+        deleteMenuItem({commit}, payload) {
+            return new Promise((resolve, reject) => {
+                Axios.delete('/webmixx/api/menu/' + payload.menu_id + '/menu_item/' + payload.id)
+                    .then((response) => {
+                        commit('removeMenuItem', payload);
+                        resolve();
+                    });
+            });
+        },
     },
     mutations: {
         set (state, menu) {
             menu.menu_items = mapMenuItems(menu.menu_items, null);
             state.menu = menu;
         },
+        setMenuItems: (state, menuItems) => {
+            state.menu.menu_items = menuItems;
+        },
         addMenuItem(state, menuItem) {
             state.menu.menu_items.push(menuItem);
         },
-        updateMenuItems: (state, menuItems) => {
-            state.menu.menu_items = menuItems;
+        removeMenuItem: (state, menuItem) => {
+            let menu_items = _.cloneDeep(state.menu.menu_items);
+            if (menuItem.menu_item_id === null) {
+                _.remove(menu_items, {'id': menuItem.id});
+            } else {
+                removeDeep(menu_items, menuItem);
+            }
+            state.menu.menu_items = menu_items;
         },
     },
     getters: {

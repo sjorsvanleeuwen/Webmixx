@@ -33,7 +33,12 @@ class MenuItemResource extends JsonResource
             'order' => $this->resource->order,
             'menu' => new MenuResource($this->whenLoaded('menu')),
             'menu_item' => new self($this->whenLoaded('menu_item')),
-            'menu_items' => self::collection($this->resource->menuItems),
+            'menu_items' => self::collection($this->whenLoaded('menu_items')),
+            'actions' => [
+                'view' => $request->user()->can('view', $this->resource),
+                'update' => $request->user()->can('update', $this->resource),
+                'delete' => $request->user()->can('delete', $this->resource),
+            ]
         ];
     }
 }

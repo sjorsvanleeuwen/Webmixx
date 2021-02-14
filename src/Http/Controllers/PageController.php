@@ -43,17 +43,7 @@ class PageController extends BaseController
     {
         $this->authorize('create', Page::class);
 
-        $pageTemplates = PageTemplate::withCount('pages')->get();
-
-        $pageTemplates = $pageTemplates->filter(function (PageTemplate $pageTemplate): bool {
-            if ($pageTemplate->repeatable) {
-                return true;
-            }
-
-            return $pageTemplate->getAttribute('pages_count') === 0;
-        })->pluck('name', 'id');
-
-        return view('webmixx::pages.create', compact('pageTemplates'));
+        return view('webmixx::pages.create');
     }
 
     public function store(CreatePageRequest $request): RedirectResponse
@@ -88,12 +78,6 @@ class PageController extends BaseController
     public function edit(Page $page): ViewContract
     {
         $this->authorize('update', $page);
-
-        $page->load([
-            'pageTemplate',
-            'pageTemplate.pageAttributeTemplates',
-            'pageAttributes',
-        ]);
 
         $pageTemplates = [
             $page->pageTemplate->id => $page->pageTemplate->name,

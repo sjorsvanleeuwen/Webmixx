@@ -21,16 +21,19 @@ class FrontController extends BaseController
     public function handle(?string $fallbackPlaceholder = null): ViewContract
     {
         // look it up in menuItems
-        $menuItem = MenuItem::where('full_slug', '/' . $fallbackPlaceholder ?? '/')->first();
+        /** @var MenuItem $menuItem */
+        $menuItem = MenuItem::where('full_slug', '/' . $fallbackPlaceholder ?? '/')->firstOrFail();
 
-        if ($menuItem) {
-            $moduleName = (new \ReflectionClass($menuItem->link))->getShortName();
-            $functionName = 'show' . $moduleName;
-
-            return $this->{$functionName}($menuItem->link_id);
+        if ($menuItem->link_type === Page::class) {
+            return $this->showPage($menuItem->link_id);
         }
 
-        return view('webmixx::dashboard');
+        $moduleName = strtolower((new \ReflectionClass($menuItem->link_type))->getShortName());
+        $template_path = $this->webmixx->getTemplateViewPath('content_types', $moduleName);
+
+        return view($template_path, [
+            $moduleName => $menuItem->link,
+        ]);
     }
 
     public function preview(string $module, int $id): ViewContract
