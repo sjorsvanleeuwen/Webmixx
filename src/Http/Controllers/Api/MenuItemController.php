@@ -53,6 +53,9 @@ class MenuItemController extends BaseController
 
         if ($menuItem->menuItem !== null) {
             $menuItem->full_slug = $menuItem->menuItem->full_slug . '/' . $menuItem->slug;
+        } elseif($menuItem->order === 0) {
+            $menuItem->full_slug = '/';
+
         } else {
             $menuItem->full_slug = '/' . $menuItem->slug;
         }

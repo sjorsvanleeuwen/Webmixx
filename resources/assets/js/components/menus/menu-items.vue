@@ -9,12 +9,24 @@
         @change="log"
     >
         <div class="item-group" :key="menuItem.id" v-for="menuItem in realValue">
-            <div class="item d-flex">
-                <span class="btn btn-sm btn-link handle"><i class="fas fa-arrows-alt"></i></span>
-                {{ menuItem.name }}
+            <div class="item" :class="[isEditing(menuItem.id) ? 'd-none' : 'd-flex']">
+                <span class="btn btn-link handle" title="Move"><i class="fas fa-arrows-alt"></i></span>
+                <input type="text" readonly class="form-control-plaintext" :value="menuItem.name">
                 <input type="hidden" :name="parentName + '[' + menuItem.id + '][id]'" :value="menuItem.id">
                 <div class="d-inline-block ml-auto">
-                    <span v-if="menuItem.actions.delete" class="btn btn-sm btn-outline-danger" @click="deleteMenuItem(menuItem)"><i class="fas fa-trash-alt"></i></span>
+                    <div class="btn-group" role="group">
+                        <span v-if="menuItem.actions.update" class="btn btn-outline-success" @click="startEdit(menuItem.id)" title="Edit"><i class="fas fa-pencil-alt"></i></span>
+                        <span v-if="menuItem.actions.delete" class="btn btn-outline-danger" @click="deleteMenuItem(menuItem)" title="Delete"><i class="fas fa-trash-alt"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="item" :class="[isEditing(menuItem.id) ? 'd-flex' : 'd-none']">
+                <div class="input-group">
+                    <input type="text" class="form-control" :value="menuItem.name" @input="change($event)">
+                    <div class="input-group-append">
+                        <span class="btn btn-outline-success" @click="finishEdit(menuItem)" title="Save"><i class="fas fa-check"></i></span>
+                        <span class="btn btn-outline-danger" @click="cancelEdit" title="Cancel"><i class="fas fa-times"></i></span>
+                    </div>
                 </div>
             </div>
             <menu-items class="item-sub" :parentMenuItemId="menuItem.id" :list="menuItem.menu_items" :parentName="parentName + '[' + menuItem.id + '][menu_items]'" />
@@ -53,9 +65,45 @@ export default {
             default: null,
         }
     },
+
+    data() {
+        return {
+            editing: {
+                id: null,
+                value: null,
+            },
+        };
+
+    },
+
     methods: {
+        startEdit(menu_item_id) {
+            this.editing.id = menu_item_id;
+        },
+        isEditing(menu_item_id) {
+            return this.editing.id === menu_item_id;
+        },
+        change(event) {
+            this.editing.value = event.target.value;
+        },
         emitter(value) {
             this.$emit("input", value);
+        },
+        finishEdit(menuItem) {
+            menuItem.name = this.editing.value;
+            this.$store.dispatch('menus/updateMenuItem', {
+                menuItem: menuItem,
+                order: menuItem.order,
+                to_menu_item_id: this.parentMenuItemId,
+            }).then(() => {
+                this.editing.id = null;
+                this.editing.value = null;
+            });
+        },
+        cancelEdit()
+        {
+            this.editing.id = null;
+            this.editing.value = null;
         },
         log(value) {
             if (value.hasOwnProperty('added')) {

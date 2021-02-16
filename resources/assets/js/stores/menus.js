@@ -58,7 +58,7 @@ export default {
                     menu_item_id: payload.to_menu_item_id,
                 })
                     .then((response) => {
-                        resolve();
+                        resolve(response.data);
                     });
             });
         },

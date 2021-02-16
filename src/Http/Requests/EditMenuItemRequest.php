@@ -29,7 +29,7 @@ class EditMenuItemRequest extends FormRequest
                 'min:0',
             ],
             'menu_item_id' => [
-                'required',
+                'nullable',
                 'int',
                 Rule::exists('menu_items', 'id')
                     ->whereNot('id', $this->route('menu_item')->id),

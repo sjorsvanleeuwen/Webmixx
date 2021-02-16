@@ -62,6 +62,10 @@ export default {
         this.$store.dispatch('link_types/index');
     },
 
+    mounted() {
+        $(this.$el).on('hidden.bs.modal', this.reset);
+    },
+
     data() {
         return {
             name: '',
@@ -89,17 +93,14 @@ export default {
                 name: this.name,
             }).then(() => {
                 $(this.$el).modal('hide');
-                this.resetForm();
-                this.$store.commit('link_types/clearLinkTypeModels');
             });
         },
-        resetForm() {
-            this.data = {
-                name: '',
-                link_type: '',
-                link_id: null,
-                link_models: [],
-            };
+        reset() {
+            this.name = '';
+            this.link_type = '';
+            this.link_id = null;
+            this.link_models = [];
+            this.$store.commit('link_types/clearLinkTypeModels');
         },
     },
 
