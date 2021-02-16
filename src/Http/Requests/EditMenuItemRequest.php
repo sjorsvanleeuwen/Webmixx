@@ -6,14 +6,12 @@ namespace SjorsvanLeeuwen\Webmixx\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use SjorsvanLeeuwen\Webmixx\Models\Menu;
-use SjorsvanLeeuwen\Webmixx\Models\MenuItem;
 
-class CreateMenuItemRequest extends FormRequest
+class EditMenuItemRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('create', [MenuItem::class, $this->route('menu')]);
+        return $this->user()->can('update', $this->route('menu_item'));
     }
 
     public function rules(): array
@@ -25,15 +23,16 @@ class CreateMenuItemRequest extends FormRequest
                 'min:3',
                 'max:255',
             ],
-            'link_type' => [
-                'required',
-                'string',
-                Rule::in(app('webmixx')->getMenuModules()->pluck('id')),
-            ],
-            'link_id' => [
+            'order' => [
                 'required',
                 'int',
-                'min:1',
+                'min:0',
+            ],
+            'menu_item_id' => [
+                'nullable',
+                'int',
+                Rule::exists('menu_items', 'id')
+                    ->whereNot('id', $this->route('menu_item')->id),
             ],
         ];
     }

@@ -1,8 +1,10 @@
 <template>
     <div class="justify-content-between row">
-        <menu-items class="col-12" v-model="menuItems" parentName="menu_items"/>
         <div class="col-12 mt-4">
             <span @click="openAddMenuItemModal" class="btn btn-sm btn-outline-success"><i class="fas fa-plus"></i></span>
+        </div>
+        <menu-items class="col-12" v-model="menuItems" parentName="menu_items"/>
+        <div class="col-12 mt-4">
             <menu-item-select :menu-id="menuId" ref="menuItemModal"/>
         </div>
     </div>
@@ -48,7 +50,7 @@ export default {
                 return this.menu.menu_items;
             },
             set(values) {
-                this.$store.dispatch("menus/updateMenuItems", values);
+                this.$store.dispatch("menus/setMenuItems", values);
             }
         },
     },

@@ -75,6 +75,12 @@ class EditPageRequest extends FormRequest
                 $attributeRules[$base] = [
                     'required',
                 ];
+                break;
+            case FieldTypes::MODULE_SET:
+                $attributeRules[$base] = [
+                    'required',
+                ];
+                break;
         }
     }
 }

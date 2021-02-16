@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\FormButtons;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\InputCheckbox;
+use SjorsvanLeeuwen\Webmixx\View\Components\Forms\InputFile;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\InputText;
+use SjorsvanLeeuwen\Webmixx\View\Components\Forms\RichText;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\Select;
 use SjorsvanLeeuwen\Webmixx\View\Components\Menus\Menu;
 use SjorsvanLeeuwen\Webmixx\View\Components\Pages\PageAttribute;
@@ -76,8 +78,10 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->loadViewComponentsAs('webmixx', [
             // Forms
-            InputText::class,
             InputCheckbox::class,
+            InputFile::class,
+            InputText::class,
+            RichText::class,
             Select::class,
             FormButtons::class,
 

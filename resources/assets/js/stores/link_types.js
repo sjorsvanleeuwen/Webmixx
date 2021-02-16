@@ -1,5 +1,4 @@
 import Axios from "axios";
-import _ from 'lodash';
 
 export default {
     namespaced: true,

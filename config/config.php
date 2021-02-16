@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
+use App\DataProviders\SpecialistsDataProvider;
 use SjorsvanLeeuwen\Webmixx\Models\Menu;
+use SjorsvanLeeuwen\Webmixx\Models\MenuItem;
 use SjorsvanLeeuwen\Webmixx\Models\Page;
 use SjorsvanLeeuwen\Webmixx\Models\PageAttributeTemplate;
 use SjorsvanLeeuwen\Webmixx\Models\PageTemplate;
+use SjorsvanLeeuwen\Webmixx\Policies\MenuItemPolicy;
 use SjorsvanLeeuwen\Webmixx\Policies\MenuPolicy;
 use SjorsvanLeeuwen\Webmixx\Policies\PageAttributeTemplatePolicy;
 use SjorsvanLeeuwen\Webmixx\Policies\PagePolicy;
@@ -25,8 +28,13 @@ return [
             'model' => Page::class,
         ],
     ],
+    'pageDateProviders' => [
+        // Add dataproviders
+        // 'name' => DataProvider::class,
+    ],
     'policyBindings' => [
         Menu::class => MenuPolicy::class,
+        MenuItem::class => MenuItemPolicy::class,
         Page::class => PagePolicy::class,
         PageAttributeTemplate::class => PageAttributeTemplatePolicy::class,
         PageTemplate::class => PageTemplatePolicy::class,

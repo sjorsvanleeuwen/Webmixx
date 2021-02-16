@@ -66,6 +66,13 @@ Route::group([
         'store',
     ])->name('menu.menu_item.store');
 
+    Route::resource('menu.menu_item', ApiMenuItemController::class)
+        ->only([
+            'store',
+            'update',
+            'destroy',
+        ]);
+
     Route::get('page_templates', [
         ApiPageTemplateController::class,
         'index',

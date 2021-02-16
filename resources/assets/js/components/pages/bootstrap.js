@@ -3,6 +3,7 @@ import PageAttribute from './page-attribute';
 import PageForm from './page-form';
 
 import TypeImage from '../field_types/type-image';
+import TypeModuleSet from '../field_types/type-module-set';
 import TypeRichText from '../field_types/type-rich-text';
 import TypeString from '../field_types/type-string';
 import TypeText from '../field_types/type-text';
@@ -15,6 +16,7 @@ export default () => {
     Vue.component('pageAttribute', PageAttribute);
     Vue.component('pageForm', PageForm);
     Vue.component('typeImage', TypeImage);
+    Vue.component('typeModuleSet', TypeModuleSet);
     Vue.component('typeRichText', TypeRichText);
     Vue.component('typeString', TypeString);
     Vue.component('typeText', TypeText);
