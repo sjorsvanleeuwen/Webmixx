@@ -73,16 +73,16 @@ class MenuItemController extends BaseController
             }
         }
 
-        return new MenuItemResource($menuItem);
+        return MenuItemResource::collection($menu->refresh()->menuItems);
     }
 
-    public function destroy(Menu $menu, MenuItem $menuItem)
+    public function destroy(Menu $menu, MenuItem $menuItem): JsonResource
     {
         $this->authorize('delete', $menuItem);
 
         $menuItem->delete();
 
-        return response('', 204);
+        return MenuItemResource::collection($menu->refresh()->menuItems);
     }
 
     protected function incrementMenuItemOrderAfterAddingToNewParent(Menu $menu, MenuItem $menuItem): void

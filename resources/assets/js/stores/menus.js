@@ -46,7 +46,7 @@ export default {
                 Axios.post('/webmixx/api/menu/' + payload.menu_id + '/menu_item', payload)
                     .then((response) => {
                         commit('addMenuItem', response.data.data);
-                        resolve(response.data.data);
+                        resolve();
                     });
             });
         },
@@ -58,7 +58,8 @@ export default {
                     menu_item_id: payload.to_menu_item_id,
                 })
                     .then((response) => {
-                        resolve(response.data);
+                        commit('setMenuItems', mapMenuItems(response.data.data, null));
+                        resolve();
                     });
             });
         },
@@ -67,6 +68,7 @@ export default {
                 Axios.delete('/webmixx/api/menu/' + payload.menu_id + '/menu_item/' + payload.id)
                     .then((response) => {
                         commit('removeMenuItem', payload);
+                        commit('setMenuItems', mapMenuItems(response.data.data, null));
                         resolve();
                     });
             });
@@ -74,6 +76,7 @@ export default {
     },
     mutations: {
         set (state, menu) {
+            menu.menu_items_all = menu.menu_items;
             menu.menu_items = mapMenuItems(menu.menu_items, null);
             state.menu = menu;
         },
@@ -91,6 +94,9 @@ export default {
                 removeDeep(menu_items, menuItem);
             }
             state.menu.menu_items = menu_items;
+            state.menu.menu_items_all.splice(_.findIndex(state.menu.menu_items_all, {
+                id: menuItem.id
+            }), 1);
         },
     },
     getters: {
