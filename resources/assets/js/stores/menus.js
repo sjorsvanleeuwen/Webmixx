@@ -76,7 +76,6 @@ export default {
     },
     mutations: {
         set (state, menu) {
-            menu.menu_items_all = menu.menu_items;
             menu.menu_items = mapMenuItems(menu.menu_items, null);
             state.menu = menu;
         },
@@ -94,9 +93,6 @@ export default {
                 removeDeep(menu_items, menuItem);
             }
             state.menu.menu_items = menu_items;
-            state.menu.menu_items_all.splice(_.findIndex(state.menu.menu_items_all, {
-                id: menuItem.id
-            }), 1);
         },
     },
     getters: {
