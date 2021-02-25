@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use SjorsvanLeeuwen\Webmixx\Http\Controllers\Api\EditorUploadController;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\Api\LinkTypeController as ApiLinkTypeController;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\Api\MenuController as ApiMenuController;
 use SjorsvanLeeuwen\Webmixx\Http\Controllers\Api\MenuItemController as ApiMenuItemController;
@@ -82,6 +83,10 @@ Route::group([
         ApiPageController::class,
         'show',
     ])->name('page.show');
+
+    Route::post('editor/upload',
+       EditorUploadController::class
+    )->name('editor.upload');
 });
 
 if (app()->environment('local')) {

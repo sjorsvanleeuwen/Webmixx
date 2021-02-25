@@ -9,7 +9,8 @@
 </template>
 
 <script>
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from 'ckeditor5-classic-plus';
+import { getEditorConfig } from "../../helpers";
 
 export default {
     name: "type-rich-text",
@@ -33,29 +34,7 @@ export default {
     data() {
         return {
             editor: ClassicEditor,
-            editorConfig: {
-                toolbar: {
-                    items: [
-                        'heading',
-                        '|',
-                        'bold',
-                        'italic',
-                        'link',
-                        'bulletedList',
-                        'numberedList',
-                        '|',
-                        'indent',
-                        'outdent',
-                        '|',
-                        // 'imageUpload',
-                        'blockQuote',
-                        'insertTable',
-                        // 'mediaEmbed',
-                        'undo',
-                        'redo',
-                    ]
-                }
-            },
+            editorConfig: getEditorConfig(),
             internalValue: this.value,
         };
     },

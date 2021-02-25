@@ -9,6 +9,7 @@ mix.js('resources/assets/js/app.js', 'dist/js/webmixx.js')
         '@ckeditor',
         'axios',
         'css-loader',
+        'ckeditor5-classic-plus',
         'lodash',
         'process',
         'sortablejs',
