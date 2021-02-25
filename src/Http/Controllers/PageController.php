@@ -129,7 +129,8 @@ class PageController extends BaseController
         $pageAttributeTemplate = $pageAttributeTemplates->firstWhere('id', $pageAttributeTemplateId);
 
         if ($pageAttributeTemplate->repeatable && is_array($value) && is_numeric(array_key_first($value)) === false) {
-            for ($index = 0; $index < count($value); $index++) {
+            $max = count($value);
+            for ($index = 0; $index < $max; $index++) {
                 $childValue = array_values($value)[$index];
                 $this->saveAttribute($page, $pageAttributeTemplates, $pageAttributeTemplateId, $childValue, $parentPageAttributeId, $index);
             }
