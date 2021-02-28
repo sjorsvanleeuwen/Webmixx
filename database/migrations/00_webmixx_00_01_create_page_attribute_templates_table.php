@@ -18,7 +18,6 @@ class CreatePageAttributeTemplatesTable extends Migration
             $table->string('name');
             $table->string('field_type');
             $table->boolean('repeatable');
-            $table->tinyInteger('order')->unsigned();
             $table->text('data_provider')->nullable();
             $table->timestamps();
 
