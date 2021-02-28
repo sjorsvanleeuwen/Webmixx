@@ -1,6 +1,9 @@
 <template>
     <div :id="'attributeTemplate' + pageAttributeTemplate.id" :class="{ repeatable: pageAttributeTemplate.repeatable }">
-        <draggable v-if="pageAttributeTemplate.repeatable" v-model="ownedPageAttributes">
+        <div class="row" v-if="pageAttributeTemplate.field_type === 'compound'">
+            <label v-text="pageAttributeTemplate.name" class="col-12 col-form-label"></label>
+        </div>
+        <draggable v-if="pageAttributeTemplate.repeatable" v-model="ownedPageAttributes" class="col-12">
             <page-attribute v-for="childPageAttribute in ownedPageAttributes" :page-attribute="childPageAttribute" :key="childPageAttribute.id" :page-attribute-template="pageAttributeTemplate" :base-name="baseName"/>
         </draggable>
         <page-attribute v-else v-for="childPageAttribute in ownedPageAttributes" :page-attribute="childPageAttribute" :key="childPageAttribute.id" :page-attribute-template="pageAttributeTemplate" :base-name="baseName"/>
