@@ -18,7 +18,8 @@ mix.js('resources/assets/js/app.js', 'dist/js/webmixx.js')
         'vue-loader',
         'vuedraggable',
         'vuex',
-    ]);
+    ])
+    .sourceMaps();
 
 mix.sass('resources/assets/scss/app.scss', 'dist/css/webmixx.css')
     .setPublicPath('dist');
