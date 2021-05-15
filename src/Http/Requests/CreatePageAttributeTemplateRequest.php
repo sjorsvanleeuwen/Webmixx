@@ -24,26 +24,29 @@ class CreatePageAttributeTemplateRequest extends FormRequest
                 'int',
                 Rule::exists('page_templates', 'id'),
             ],
-            'page_attribute_template_id' => [
-                'nullable',
-                'int',
-                Rule::exists('page_attribute_templates', 'id'),
-            ],
             'name' => [
                 'required',
                 'string',
                 'min:4',
                 'max:255',
             ],
+            'repeatable' => [
+                'nullable',
+                'boolean',
+            ],
             'field_type' => [
                 'required',
                 'string',
                 Rule::in(FieldTypes::getAllTypes()),
             ],
-            'repeatable' => [
+            'data_provider' => [
+                Rule::requiredIf(in_array($this->input('field_type'), [
+                    FieldTypes::MODULE_ITEM,
+                    FieldTypes::MODULE_SET,
+                ], true)),
                 'nullable',
-                'boolean',
-            ],
+                'string',
+            ]
         ];
     }
 
@@ -54,6 +57,7 @@ class CreatePageAttributeTemplateRequest extends FormRequest
             'name' => 'Name',
             'field_type' => 'Field Type',
             'repeatable' => 'Repeatable',
+            'data_provider' => 'Data provider',
         ];
     }
 }

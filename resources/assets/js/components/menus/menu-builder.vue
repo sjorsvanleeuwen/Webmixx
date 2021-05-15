@@ -14,7 +14,6 @@
 import MenuItems from './menu-items';
 import MenuItemSelect from './menu-item-select';
 import {mapGetters} from "vuex";
-import _ from "lodash";
 
 export default {
     name: "menuBuilder",

@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace SjorsvanLeeuwen\Webmixx;
 
+use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use SjorsvanLeeuwen\Webmixx\Models\Page;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\FormButtons;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\InputCheckbox;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\InputFile;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\InputText;
+use SjorsvanLeeuwen\Webmixx\View\Components\Forms\MultiSelect;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\RichText;
 use SjorsvanLeeuwen\Webmixx\View\Components\Forms\Select;
+use SjorsvanLeeuwen\Webmixx\View\Components\Forms\Textarea;
 use SjorsvanLeeuwen\Webmixx\View\Components\Menus\Menu;
-use SjorsvanLeeuwen\Webmixx\View\Components\Pages\PageAttribute;
-use SjorsvanLeeuwen\Webmixx\View\Components\Pages\PageAttributeTemplate;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -26,7 +28,8 @@ class ServiceProvider extends BaseServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'webmixx');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'webmixx');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->loadRoutesFrom(__DIR__ . '/routes.php');
+        $this->loadRoutesFrom(__DIR__ . '/routes-web.php');
+        $this->loadRoutesFrom(__DIR__ . '/routes-api.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -62,8 +65,18 @@ class ServiceProvider extends BaseServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'webmixx');
 
         // Register the main class to use with the facade
-        $this->app->singleton('webmixx', function () {
-            return new Webmixx($this->app);
+        $webmixx = new Webmixx($this->app);
+        $this->app->singleton(Webmixx::class, function () use ($webmixx) {
+            return $webmixx;
+        });
+
+        $webmixx->addPreviewModule(Page::moduleName(), function(int $id) use($webmixx): ViewContract {
+            /** @var Page $page */
+            $page = Page::with('pageTemplate', 'pageTemplate.pageAttributeTemplates', 'pageAttributes')->find($id);
+
+            $template_path = $webmixx->getTemplateViewPath(Page::moduleName(), $page->pageTemplate->slug);
+
+            return view($template_path, compact('page'));
         });
     }
 
@@ -83,11 +96,9 @@ class ServiceProvider extends BaseServiceProvider
             InputText::class,
             RichText::class,
             Select::class,
+            Textarea::class,
+            MultiSelect::class,
             FormButtons::class,
-
-            // Admin page
-            PageAttributeTemplate::class,
-            PageAttribute::class,
 
             // Front Menu
             Menu::class,

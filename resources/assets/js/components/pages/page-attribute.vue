@@ -1,8 +1,8 @@
 <template>
     <div :class="'row field-' + pageAttributeTemplate.field_type" :data-bound-by="'attributeTemplate' + pageAttributeTemplate.id">
         <div class="col">
-            <page-attribute-template v-if="childPageAttributeTemplates.length > 0" v-for="childPageAttributeTemplate in childPageAttributeTemplates" v-bind:key="childPageAttributeTemplate.id" :page-attribute-template="childPageAttributeTemplate" :page-attribute="pageAttribute" :base-name="fieldName"/>
-            <component v-bind:is="fieldTypeComponent" v-if="childPageAttributeTemplates.length === 0" :name="fieldName" :label="pageAttributeTemplate.name" :value="pageAttribute.value" />
+            <vue-webmixx-pages-attribute-template v-if="childPageAttributeTemplates.length > 0" v-for="childPageAttributeTemplate in childPageAttributeTemplates" v-bind:key="childPageAttributeTemplate.id" :page-attribute-template="childPageAttributeTemplate" :page-attribute="pageAttribute" :base-name="fieldName"/>
+            <component v-bind:is="fieldTypeComponent" v-if="childPageAttributeTemplates.length === 0" :name="fieldName" :label="pageAttributeTemplate.name" :value="pageAttribute.value" :page-attribute-template="pageAttributeTemplate" />
         </div>
         <div v-if="pageAttributeTemplate.repeatable" class="col-auto text-right">
             <span class="btn btn-sm btn-link handle"><i class="fas fa-arrows-alt"></i></span>
@@ -13,10 +13,28 @@
 
 <script>
 import _ from 'lodash';
-import {mapGetters} from "vuex";
+import {mapGetters} from 'vuex';
+import {namespaceComponents} from "../../helpers";
+
+import TypeImage from '../field_types/type-image';
+import TypeModuleItem from '../field_types/type-module-item';
+import TypeModuleSet from '../field_types/type-module-set';
+import TypeRichText from '../field_types/type-rich-text';
+import TypeString from '../field_types/type-string';
+import TypeText from '../field_types/type-text';
 
 export default {
-    name: "pageAttribute",
+    components: {
+        ...namespaceComponents('fieldTypes', {
+            'typeImage': TypeImage,
+            'typeModuleItem': TypeModuleItem,
+            'typeModuleSet': TypeModuleSet,
+            'typeRichText': TypeRichText,
+            'typeString': TypeString,
+            'typeText': TypeText,
+        }),
+    },
+    name: "vue-webmixx-pages-attribute",
 
     props: {
         pageAttributeTemplate: {
@@ -57,9 +75,7 @@ export default {
             return this.pageAttributeTemplate.field_type === 'compound';
         },
         childPageAttributeTemplates() {
-            return _.orderBy(_.filter(this.page_template.page_attribute_templates, {
-                page_attribute_template_id: this.pageAttributeTemplate.id,
-            }), 'order');
+            return this.pageAttributeTemplate.page_attribute_templates;
         },
         fieldName() {
             if (this.pageAttributeTemplate.repeatable) {
@@ -68,7 +84,7 @@ export default {
             return this.baseName + '[' + this.pageAttributeTemplate.id + ']';
         },
         fieldTypeComponent() {
-            return 'type' + _.replace(_.startCase(this.pageAttributeTemplate.field_type), ' ', '');
+            return 'fieldTypes:type' + _.replace(_.startCase(this.pageAttributeTemplate.field_type), ' ', '');
         }
     },
 }
@@ -76,7 +92,7 @@ export default {
 
 <style scoped>
     .field-compound {
-        padding: 7px 0px;
+        padding: 7px 0;
         border: 1px solid var(--secondary);
         border-radius: 7px;
         margin-bottom: 7px;

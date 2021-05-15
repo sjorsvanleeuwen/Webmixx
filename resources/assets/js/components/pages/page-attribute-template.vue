@@ -4,9 +4,9 @@
             <label v-text="pageAttributeTemplate.name" class="col-12 col-form-label"></label>
         </div>
         <draggable v-if="pageAttributeTemplate.repeatable" v-model="ownedPageAttributes" class="col-12">
-            <page-attribute v-for="childPageAttribute in ownedPageAttributes" :page-attribute="childPageAttribute" :key="childPageAttribute.id" :page-attribute-template="pageAttributeTemplate" :base-name="baseName"/>
+            <vue-webmixx-pages-attribute v-for="childPageAttribute in ownedPageAttributes" :page-attribute="childPageAttribute" :key="childPageAttribute.id" :page-attribute-template="pageAttributeTemplate" :base-name="baseName"/>
         </draggable>
-        <page-attribute v-else v-for="childPageAttribute in ownedPageAttributes" :page-attribute="childPageAttribute" :key="childPageAttribute.id" :page-attribute-template="pageAttributeTemplate" :base-name="baseName"/>
+        <vue-webmixx-pages-attribute v-else v-for="childPageAttribute in ownedPageAttributes" :page-attribute="childPageAttribute" :key="childPageAttribute.id" :page-attribute-template="pageAttributeTemplate" :base-name="baseName"/>
         <div v-if="pageAttributeTemplate.repeatable" class="form-group text-right">
             <span class="btn btn-sm btn-outline-success" @click="addPageAttribute">
                 <i class="fas fa-plus"></i> {{ pageAttributeTemplate.name}}
@@ -17,14 +17,14 @@
 
 <script>
 import _ from 'lodash';
-import {mapGetters} from "vuex";
+import {mapGetters} from 'vuex';
 import draggable from 'vuedraggable';
 
 export default {
-    name: "pageAttributeTemplate",
+    name: "vue-webmixx-pages-attribute-template",
 
     components: {
-        draggable
+        draggable,
     },
 
     beforeMount() {
@@ -45,6 +45,7 @@ export default {
                 return {
                     id: null,
                     page_attribute_template_id: this.pageAttributeTemplate.id,
+                    value: this.pageAttributeTemplate.data_provider,
                 };
             },
         },
@@ -68,6 +69,7 @@ export default {
                 page_attribute_template_id: this.pageAttributeTemplate.id,
                 page_attribute_id: this.pageAttribute.id,
                 order: this.ownedPageAttributes.length,
+                value: this.pageAttributeTemplate.field_type === 'module-set' ? this.pageAttributeTemplate.data_provider : null,
             });
         },
     },

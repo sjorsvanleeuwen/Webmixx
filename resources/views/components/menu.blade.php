@@ -23,11 +23,6 @@
                     <a class="nav-link" aria-current="page" href="{{ route('webmixx.page_templates.index') }}">Page Templates</a>
                 </li>
             @endcan
-            @can('viewAny', \SjorsvanLeeuwen\Webmixx\Models\PageAttributeTemplate::class)
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('webmixx.page_attribute_templates.index') }}">Page Attribute Templates</a>
-                </li>
-            @endcan
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">

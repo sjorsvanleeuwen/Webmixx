@@ -29,9 +29,11 @@ class LinkTypeController extends BaseController
 
     public function show(string $link_type): JsonResource
     {
+        $this->authorize('viewAny', Menu::class);
+
         $menuModel = $this->webmixx->getMenuModelClass($link_type);
 
-        $models = $menuModel::get();
+        $models = $menuModel::query()->orderBy('name')->get();
 
         return LinkModelResource::collection($models);
     }

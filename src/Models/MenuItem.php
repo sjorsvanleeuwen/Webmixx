@@ -62,4 +62,12 @@ class MenuItem extends Model
     {
         return $this->hasMany(self::class)->orderBy('order');
     }
+
+    public function url(): string
+    {
+        if ($this->menu_item_id === null && $this->order === 0) {
+            return '';
+        }
+        return $this->full_slug;
+    }
 }

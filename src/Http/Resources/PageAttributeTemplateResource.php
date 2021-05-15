@@ -25,6 +25,11 @@ class PageAttributeTemplateResource extends JsonResource
             'order' => $this->resource->order,
             'data_provider' => $this->resource->data_provider,
             'page_template' => new PageTemplateResource($this->whenLoaded('pageTemplate')),
+            'actions' => [
+                'view' => $request->user()->can('view', $this->resource),
+                'update' => $request->user()->can('update', $this->resource),
+                'delete' => $request->user()->can('delete', $this->resource),
+            ],
         ];
     }
 }

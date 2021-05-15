@@ -30,8 +30,16 @@ class PageAttributeBuilder implements IteratorAggregate
     /**
      * @return PageAttributeBuilder|PageAttributeBuilder[]
      */
-    public function __get(string $name): self
+    public function __get(string $name)
     {
+        if ($this->pageAttributeTemplate->field_type === FieldTypes::MODULE_ITEM) {
+            $dataProvider = app($this->pageAttributeTemplate->data_provider);
+
+            $model = $dataProvider->getItem((int)$this->pageAttribute->value);
+
+            return $model->getAttribute($name);
+        }
+
         $pageAttributeTemplate = $this
             ->page
             ->pageTemplate

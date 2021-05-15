@@ -8,6 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use SjorsvanLeeuwen\Webmixx\Models\Menu;
 use SjorsvanLeeuwen\Webmixx\Models\MenuItem;
+use SjorsvanLeeuwen\Webmixx\Webmixx;
 
 class CreateMenuItemRequest extends FormRequest
 {
@@ -28,7 +29,7 @@ class CreateMenuItemRequest extends FormRequest
             'link_type' => [
                 'required',
                 'string',
-                Rule::in(app('webmixx')->getMenuModules()->pluck('id')),
+                Rule::in(app(Webmixx::class)->getMenuModules()->pluck('id')),
             ],
             'link_id' => [
                 'required',

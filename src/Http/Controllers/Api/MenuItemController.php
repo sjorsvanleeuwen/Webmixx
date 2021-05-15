@@ -21,7 +21,7 @@ class MenuItemController extends BaseController
         $this->authorize('create', [MenuItem::class, $menu]);
 
         /** @var Webmixx $webmixx */
-        $webmixx = app('webmixx');
+        $webmixx = app(Webmixx::class);
 
         $data = $request->validated();
 
@@ -62,14 +62,14 @@ class MenuItemController extends BaseController
         $menuItem->save();
 
         if ($menuItem->wasChanged('menu_item_id')) {
-            $this->incrementMenuItemOrderAfterAddingToNewParent($menu, $menuItem);
+            $this->incrementSubElementOrder($menu->menuItems(), 'menu_item_id', $menuItem->menu_item_id, $menuItem->order, null, $menuItem->id);
 
-            $this->decrementMenuItemOrderAfterLeavingOriginalParent($menu, $original_menu_item_id, $original_order);
+            $this->decrementSubElementOrder($menu->menuItems(), 'menu_item_id', $original_menu_item_id, $original_order);
         } else if ($menuItem->wasChanged('order')) {
             if ($original_order < $menuItem->order) {
-                $this->decrementMenuItemsAfterMovingDown($menu, $menuItem, $original_order);
+                $this->decrementSubElementOrder($menu->menuItems(), 'menu_item_id', $menuItem->menu_item_id, $original_order, $menuItem->order, $menuItem->id);
             } else {
-                $this->incrementMenuItemsAfterMovingUp($menu, $menuItem, $original_order);
+                $this->incrementSubElementOrder($menu->menuItems(), 'menu_item_id', $menuItem->menu_item_id, $menuItem->order, $original_order, $menuItem->id);
             }
         }
 
@@ -82,49 +82,8 @@ class MenuItemController extends BaseController
 
         $menuItem->delete();
 
+        $this->decrementSubElementOrder($menu->menuItems(), 'menu_item_id', $menuItem->menu_item_id, $menuItem->order);
+
         return MenuItemResource::collection($menu->refresh()->menuItems);
     }
-
-    protected function incrementMenuItemOrderAfterAddingToNewParent(Menu $menu, MenuItem $menuItem): void
-    {
-        $menu->menuItems()
-            ->getQuery()
-            ->where('menu_item_id', $menuItem->menu_item_id)
-            ->where('order', '>=', $menuItem->order)
-            ->where('id', '!=', $menuItem->id)
-            ->increment('order');
-    }
-
-    protected function decrementMenuItemOrderAfterLeavingOriginalParent(Menu $menu, ?int $original_menu_item_id, int $original_order): void
-    {
-        $menu->menuItems()
-            ->getQuery()
-            ->where('menu_item_id', $original_menu_item_id)
-            ->where('order', '>', $original_order)
-            ->decrement('order');
-    }
-
-    protected function decrementMenuItemsAfterMovingDown(Menu $menu, MenuItem $menuItem, int $original_order): void
-    {
-        $menu->menuItems()
-            ->getQuery()
-            ->where('menu_item_id', $menuItem->menu_item_id)
-            ->where('order', '>', $original_order)
-            ->where('order', '<=', $menuItem->order)
-            ->where('id', '!=', $menuItem->id)
-            ->decrement('order');
-    }
-
-    protected function incrementMenuItemsAfterMovingUp(Menu $menu, MenuItem $menuItem, int $original_order): void
-    {
-        $menu->menuItems()
-            ->getQuery()
-            ->where('menu_item_id', $menuItem->menu_item_id)
-            ->where('order', '>=', $menuItem->order)
-            ->where('order', '<', $original_order)
-            ->where('id', '!=', $menuItem->id)
-            ->increment('order');
-    }
-
-
 }

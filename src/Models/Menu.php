@@ -38,8 +38,18 @@ class Menu extends Model
         return $this->hasMany(MenuItem::class)->orderBy('order');
     }
 
+    public function getRootMenuItems(): Collection
+    {
+        return $this->menuItems->whereNull('menu_item_id');
+    }
+
     public function rootMenuItems(): HasMany
     {
         return $this->hasMany(MenuItem::class)->whereNull('menu_item_id')->orderBy('order');
+    }
+
+    public static function moduleName(): string
+    {
+        return 'menu';
     }
 }

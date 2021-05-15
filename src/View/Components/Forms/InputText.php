@@ -25,7 +25,7 @@ class InputText extends Component
         $this->request = $request;
         $this->name = $name;
         $this->label = $label;
-        $this->value = strval($this->request->old($this->name, $value));
+        $this->value = (string)$this->request->old($this->name, $value);
     }
 
     public function render(): ViewContract

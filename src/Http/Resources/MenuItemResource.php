@@ -38,7 +38,7 @@ class MenuItemResource extends JsonResource
                 'view' => $request->user()->can('view', $this->resource),
                 'update' => $request->user()->can('update', $this->resource),
                 'delete' => $request->user()->can('delete', $this->resource),
-            ]
+            ],
         ];
     }
 }

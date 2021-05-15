@@ -19,4 +19,13 @@ class PageTemplateController extends BaseController
 
         return PageTemplateResource::collection($pageTemplates);
     }
+
+    public function show(PageTemplate $pageTemplate): JsonResource
+    {
+        $this->authorize('view', $pageTemplate);
+
+        $pageTemplate->load('pageAttributeTemplates');
+
+        return new PageTemplateResource($pageTemplate);
+    }
 }

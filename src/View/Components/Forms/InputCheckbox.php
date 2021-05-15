@@ -27,9 +27,8 @@ class InputCheckbox extends Component
         $this->request = $request;
         $this->name = $name;
         $this->label = $label;
-        $this->label = $label;
         $this->value = 1;
-        $this->checked = $this->hasSession() ? $this->session()->hasOldInput($this->name) : $checked;
+        $this->checked = $this->request->old($this->name) !== null ? true : $checked;
     }
 
     public function render(): View

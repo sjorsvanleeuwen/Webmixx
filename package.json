@@ -8,6 +8,7 @@
     },
     "scripts": {
         "development": "mix",
+        "watch": "mix watch",
         "production": "mix --production",
         "test": "echo \"Error: no test specified\" && exit 1"
     },

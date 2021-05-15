@@ -57,11 +57,11 @@ class PageTemplate extends Model
 
     public function pageAttributeTemplates(): HasMany
     {
-        return $this->hasMany(PageAttributeTemplate::class);
+        return $this->hasMany(PageAttributeTemplate::class)->orderBy('order');
     }
 
     public function rootPageAttributeTemplates(): HasMany
     {
-        return $this->hasMany(PageAttributeTemplate::class)->whereNull('page_attribute_template_id');
+        return $this->hasMany(PageAttributeTemplate::class)->whereNull('page_attribute_template_id')->orderBy('order');
     }
 }

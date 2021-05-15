@@ -2,5 +2,5 @@
     <x-webmixx::title-header>
         Add Page
     </x-webmixx::title-header>
-    <page-form/>
+    <vue-webmixx-pages-form/>
 </x-webmixx::layout>

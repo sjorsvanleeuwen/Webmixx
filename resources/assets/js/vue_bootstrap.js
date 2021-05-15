@@ -1,8 +1,9 @@
-import Vue from "vue";
+import Vue from 'vue';
 import Store from './store';
 import CKEditor from '@ckeditor/ckeditor5-vue2';
-import bootstrapPages from "./components/pages/bootstrap";
-import bootstrapMenus from "./components/menus/bootstrap";
+import bootstrapPages from './components/pages/bootstrap';
+import bootstrapPageTemplates from './components/page_templates/bootstrap';
+import bootstrapMenus from './components/menus/bootstrap';
 
 export default function() {
     Object.defineProperty(Vue.prototype, 'csrfToken', {
@@ -15,6 +16,7 @@ export default function() {
 
     if ($('#app').hasClass('no-vue') === false) {
         bootstrapPages();
+        bootstrapPageTemplates();
         bootstrapMenus();
 
         new Vue({

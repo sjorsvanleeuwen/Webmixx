@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 use SjorsvanLeeuwen\Webmixx\Models\Menu as MenuModel;
-use SjorsvanLeeuwen\Webmixx\Models\MenuItem;
+use SjorsvanLeeuwen\Webmixx\Models\MenuItem as MenuItemModel;
 use SjorsvanLeeuwen\Webmixx\Webmixx;
 
 class Menu extends Component
@@ -27,25 +27,20 @@ class Menu extends Component
 
     public function render(): ViewContract
     {
-        $template_path = $this->webmixx->getTemplateViewPath(self::moduleName(), $this->menu->slug);
+        $template_path = $this->webmixx->getTemplateViewPath(MenuModel::moduleName(), $this->menu->slug);
 
         return view($template_path, [
-            'menuItems' => $this->menu->rootMenuItems,
+            'menuItems' => $this->menu->getRootMenuItems(),
         ]);
     }
 
-    public function hasChildItems(MenuItem $menuItem): bool
+    public function hasChildItems(MenuItemModel $menuItem): bool
     {
         return $this->menu->menuItems->where('menu_item_id', $menuItem->id)->isNotEmpty();
     }
 
-    public function getChildItems(MenuItem $menuItem): Collection
+    public function getChildItems(MenuItemModel $menuItem): Collection
     {
         return $this->menu->menuItems->where('menu_item_id', $menuItem->id);
-    }
-
-    public static function moduleName(): string
-    {
-        return 'menu';
     }
 }

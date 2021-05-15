@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SjorsvanLeeuwen\Webmixx\View\Components\Forms;
 
-use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Http\Request;
 use Illuminate\View\Component;
 
@@ -32,12 +32,12 @@ class Select extends Component
         $this->name = $name;
         $this->label = $label;
         $this->options = $options;
-        $this->value = strval($this->request->old($this->name, $value));
+        $this->value = (string)$this->request->old($this->name, $value);
         $this->emptyFirst = $emptyFirst;
         $this->allowEmpty = $allowEmpty;
     }
 
-    public function render(): View
+    public function render(): ViewContract
     {
         return view('webmixx::components.forms.select');
     }

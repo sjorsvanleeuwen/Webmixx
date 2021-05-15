@@ -34,6 +34,6 @@ class PageAttributeTemplatePolicy
 
     public function delete(User $user, PageAttributeTemplate $pageAttributeTemplate): bool
     {
-        return $user->exists && $pageAttributeTemplate->exists;
+        return $user->exists && $pageAttributeTemplate->pageAttributeTemplates->isEmpty();
     }
 }

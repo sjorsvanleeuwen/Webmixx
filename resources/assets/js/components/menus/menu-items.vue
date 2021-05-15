@@ -15,14 +15,14 @@
                 <input type="hidden" :name="parentName + '[' + menuItem.id + '][id]'" :value="menuItem.id">
                 <div class="d-inline-block ml-auto">
                     <div class="btn-group" role="group">
-                        <span v-if="menuItem.actions.update" class="btn btn-outline-success" @click="startEdit(menuItem.id)" title="Edit"><i class="fas fa-pencil-alt"></i></span>
+                        <span v-if="menuItem.actions.update" class="btn btn-outline-success" @click="startEdit(menuItem)" title="Edit"><i class="fas fa-pencil-alt"></i></span>
                         <span v-if="menuItem.actions.delete" class="btn btn-outline-danger" @click="deleteMenuItem(menuItem)" title="Delete"><i class="fas fa-trash-alt"></i></span>
                     </div>
                 </div>
             </div>
             <div class="item" :class="[isEditing(menuItem.id) ? 'd-flex' : 'd-none']">
                 <div class="input-group">
-                    <input type="text" class="form-control" :value="menuItem.name" @input="change($event)">
+                    <input type="text" class="form-control" :value="editing.value" @input="change($event)">
                     <div class="input-group-append">
                         <span class="btn btn-outline-success" @click="finishEdit(menuItem)" title="Save"><i class="fas fa-check"></i></span>
                         <span class="btn btn-outline-danger" @click="cancelEdit" title="Cancel"><i class="fas fa-times"></i></span>
@@ -36,14 +36,15 @@
 
 <script>
 import draggable from 'vuedraggable';
-import _ from "lodash";
 import {mapGetters} from "vuex";
 
 export default {
     name: "menuItems",
+
     components: {
         draggable
     },
+
     props: {
         value: {
             required: false,
@@ -73,12 +74,12 @@ export default {
                 value: null,
             },
         };
-
     },
 
     methods: {
-        startEdit(menu_item_id) {
-            this.editing.id = menu_item_id;
+        startEdit(menu_item) {
+            this.editing.id = menu_item.id;
+            this.editing.value = menu_item.name;
         },
         isEditing(menu_item_id) {
             return this.editing.id === menu_item_id;
@@ -156,7 +157,7 @@ export default {
     .item-sub {
         margin: 0 0 0 1rem;
     }
-    .btn .handle {
+    .btn.handle {
         cursor: move;
     }
 </style>

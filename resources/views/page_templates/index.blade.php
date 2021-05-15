@@ -19,6 +19,7 @@
                     <a href="{{ route('webmixx.page_templates.show', $pageTemplate) }}">{{ $pageTemplate->name }}</a>
                 </td>
                 <td class="col-auto text-right">
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('webmixx.page_templates.edit', $pageTemplate) }}"><i class="far fa-edit"></i></a>
                     <x-webmixx::post-link>
                         <x-slot name="url">{{ route('webmixx.page_templates.destroy', $pageTemplate) }}</x-slot>
                         <x-slot name="method">delete</x-slot>

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\DataProviders\SpecialistsDataProvider;
 use SjorsvanLeeuwen\Webmixx\Models\Menu;
 use SjorsvanLeeuwen\Webmixx\Models\MenuItem;
 use SjorsvanLeeuwen\Webmixx\Models\Page;
@@ -27,10 +26,6 @@ return [
             'title' => 'Page',
             'model' => Page::class,
         ],
-    ],
-    'pageDateProviders' => [
-        // Add dataproviders
-        // 'name' => DataProvider::class,
     ],
     'policyBindings' => [
         Menu::class => MenuPolicy::class,

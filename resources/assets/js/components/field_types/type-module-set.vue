@@ -1,6 +1,6 @@
 <template>
     <div class="invisible">
-        <input type="hidden" :name="name" value="1"/>
+        <input type="hidden" :name="name" :value="value"/>
     </div>
 </template>
 
@@ -17,9 +17,8 @@ export default {
             type: String,
         },
         value: {
-            required: false,
+            required: true,
             type: String,
-            default: '',
         }
     },
 }

@@ -53,4 +53,15 @@ class FieldTypes
             self::COMPOUND => 'Compound',
         ]);
     }
+
+    public static function getIdName(): Collection
+    {
+        return self::getAll()
+            ->map(function ($fieldType, $id): array {
+                return [
+                    'id' => $id,
+                    'name' => $fieldType,
+                ];
+            })->values();
+    }
 }

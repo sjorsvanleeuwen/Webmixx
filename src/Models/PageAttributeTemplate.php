@@ -21,13 +21,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $slug
  * @property string $name
  * @property string $field_type
+ * @property ?string $data_provider
  * @property bool $repeatable
+ * @property int $order
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property PageTemplate $pageTemplate
  * @property PageAttributeTemplate $pageAttributeTemplate
  * @property Collection<PageAttributeTemplate>|PageAttributeTemplate[] $pageAttributeTemplates
- * @property Collection<PageAttribute>|PageAttribute[] $pageAttribute
+ * @property Collection<PageAttribute>|PageAttribute[] $pageAttributes
  */
 class PageAttributeTemplate extends Model
 {
@@ -47,6 +49,7 @@ class PageAttributeTemplate extends Model
         'name',
         'field_type',
         'repeatable',
+        'data_provider',
     ];
 
     /**

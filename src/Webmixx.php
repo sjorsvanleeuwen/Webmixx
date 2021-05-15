@@ -8,26 +8,65 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+use SjorsvanLeeuwen\Webmixx\Contracts\ModuleFieldType;
+use SjorsvanLeeuwen\Webmixx\Contracts\ModuleItemFieldType;
+use SjorsvanLeeuwen\Webmixx\Contracts\ModuleSetFieldType;
 use SjorsvanLeeuwen\Webmixx\Exceptions\MenuModuleNotFoundException;
 
 class Webmixx
 {
-    /**
-     * The Laravel application instance.
-     *
-     * @var Application.
-     */
-    protected $app;
+    protected Application $app;
+    protected Collection $pageModuleSets;
+    protected Collection $pageModuleItems;
+    protected Collection $previewModules;
 
-    /**
-     * @param Application $app
-     */
-    public function __construct($app = null)
+    public function __construct(Application $app = null)
     {
         if (! $app) {
             $app = app();   //Fallback when $app is not given
         }
         $this->app = $app;
+        $this->pageModuleSets = collect();
+        $this->pageModuleItems = collect();
+        $this->previewModules = collect();
+    }
+
+    public function addPageModule(ModuleFieldType $module): void
+    {
+        if ($module instanceof ModuleSetFieldType) {
+            $this->pageModuleSets->push([
+                'id' => get_class($module),
+                'name' => $module::getModuleDisplayName(),
+            ]);
+        } else if ($module instanceof ModuleItemFieldType) {
+            $this->pageModuleItems->push([
+                'id' => get_class($module),
+                'name' => $module::getModuleDisplayName(),
+            ]);
+        }
+    }
+
+    public function getPageModuleSets(): Collection
+    {
+        return $this->pageModuleSets;
+    }
+
+    public function getPageModuleItems(): Collection
+    {
+        return $this->pageModuleItems;
+    }
+
+    public function addPreviewModule(string $module_name, callable $render_function): void
+    {
+        $this->previewModules->push([
+            'id' => $module_name,
+            'render' => $render_function,
+        ]);
+    }
+
+    public function getPreviewModules(): Collection
+    {
+        return $this->previewModules;
     }
 
     public function getMenuModules(): Collection
