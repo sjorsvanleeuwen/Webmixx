@@ -30,18 +30,3 @@ Route::group([
     Route::resource('page_templates', PageTemplateController::class);
     Route::get('preview/{module}/{id}', [FrontController::class, 'preview'])->name('preview');
 });
-
-if (app()->environment('local')) {
-    Route::get('webmixx/auth', function () {
-        $user = \App\Models\User::updateOrCreate([
-            'id' => 1,
-            'name' => 'Sjors van Leeuwen',
-            'email' => 'sjors@sjorsvanleeuwen.com',
-            'password' => 'dontcare',
-        ]);
-
-        \Illuminate\Support\Facades\Auth::login($user);
-
-        return redirect()->route('webmixx.dashboard');
-    })->name('login')->middleware('web');
-}
