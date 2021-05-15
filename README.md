@@ -5,23 +5,15 @@ Build your templates, create your Pages and put them in a Menu.
 
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Pages and PageTempates](#pages)
+  - [Pages and PageTempates](#pages-and-pagetemplates)
   - [Menus](#menus)
+  - [PageModuleSet and PageModuleItem](#pagemoduleset-and-pagemoduleitem)
+    - [PageModuleSet](#pagemoduleset)
+    - [PageModuleItem](#pagemoduleitem)
 
 ## Installation
 
-Since it is not ready for public you need to add it to your composer.json repositories:
-
-```json
-"repositories": [
-        {
-            "type": "path",
-            "url": "./packages/webmixx"
-        }
-    ],
-```
-
-and then install it as usual:
+Install it as usual:
 
 ```bash
 composer require sjorsvanleeuwen/webmix
@@ -32,21 +24,20 @@ It should work out of the box in a local environment after you publish the asset
 ```bash
 php artisan vendor:publish --tag=webmixx-assets
 ```
-You can also create a symlink between the package dist folder and your public vendor directory.
 
 ## Usage
 
 ### Pages and PageTemplates
-Log in to the backend: /webmixx/auth and create a Page template and add some Page attribute templates.
+Log in as any user and go to: /webmixx/dashboard and create a PageTemplate and add some PageAttributeTemplates.
 
-Next, create a Page and select your newly created Page template and fill the form.
+Next, create a Page and select your newly created PageTemplate and fill the form.
 
-Afterwards create your Page template blade file.
+Afterwards create your PageTemplate blade file.
 If you did not change the config file, this should be created in your project resources folder in resources/views/webmixx_templates/Page.
 
-Use the name of your Page template as name of your blade template.
+Use the name of your PageTemplate as name of your blade template.
 
-Check your Page template's show url for a quick start of your Page template.
+Check your PageTemplates show url for a quick start of your PageTemplate.
 
 When you are done with building your template file, visit /preview/Page/{id of your Page}, or simply click it from the Page list in the backend.
 
@@ -132,7 +123,7 @@ As before, create a new class but this time implement ModuleItemFieldType.
 
 Implement the functions in the interface:
 - *getSelectList* Used in Page creation, this should return a collection with an integer id field and a string name field.
-- *getItem* Used in Page template to retrieve your item from the PageAttribute.   
+- *getItem* Used in PageTemplate to retrieve your item from the PageAttribute.   
 - *getModuleDisplayName* A nice name for your reference when building a PageTemplate
 
 This could look something like this:
@@ -176,7 +167,6 @@ As before, now register it in your AppServiceProvider
         Webmixx::addPageModule(new PageSlideshowProvider());
     }
 ```
-
 
 Now, when building a PageTemplate and adding a ModuleItem it will provide you with another field called Data Provider.
 
