@@ -93,11 +93,11 @@ export default {
 <style scoped>
     .field-compound {
         padding: 7px 0;
-        border: 1px solid var(--secondary);
+        border: 1px solid var(--bs-gray);
         border-radius: 7px;
         margin-bottom: 7px;
     }
-    .btn .handle {
+    .btn.handle {
         cursor: move;
     }
 </style>

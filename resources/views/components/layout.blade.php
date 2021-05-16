@@ -6,31 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" crossorigin="anonymous"/>
     <link rel="stylesheet" href="/vendor/webmixx/css/webmixx.css">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
     <title>Webmixx</title>
 </head>
 <body>
     <x-webmixx::menu />
-    <div class="container @if(isset($withoutVue) && $withoutVue === true) no-vue @endif" id="app">
+    <div class="container" id="app">
         {!! $slot !!}
     </div>
     <script src="/vendor/webmixx/js/manifest.js" defer></script>
     <script src="/vendor/webmixx/js/vendor.js" defer></script>
     <script src="/vendor/webmixx/js/webmixx.js" defer></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            let selects = document.querySelectorAll("select[multiple]");
-            selects.forEach(function(select) {
-                new Choices(select);
-            });
-        });
-    </script>
 </body>
 </html>

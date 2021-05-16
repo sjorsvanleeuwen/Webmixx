@@ -17,6 +17,7 @@
         "@fortawesome/fontawesome-free": "^5.15.3",
         "axios": "^0.21",
         "bootstrap": "^5.0.1",
+        "choices.js": "^9.0.1",
         "ckeditor5-classic-plus": "^1.0.4",
         "jquery": "^3.6.0",
         "laravel-mix": "^6.0.19",

@@ -72,7 +72,7 @@ export default {
     },
 
     mounted() {
-        $(this.$el).on('hidden.bs.modal', this.reset);
+        this.$el.addEventListener('hidden.bs.modal', this.reset);
     },
 
     data() {
