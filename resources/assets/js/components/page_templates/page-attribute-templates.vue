@@ -9,7 +9,7 @@
         @change="log"
     >
         <div class="item-group" v-for="pageAttributeTemplate in realValue" :key="pageAttributeTemplate.id">
-            <div class="item" :class="[isEditing(pageAttributeTemplate.id) ? 'd-none' : 'd-flex']">
+            <div class="item border p-3" :class="[isEditing(pageAttributeTemplate.id) ? 'd-none' : 'd-flex']">
                 <span class="btn btn-link handle" title="Move"><i class="fas fa-arrows-alt"></i></span>
                 <span class="form-control-plaintext" v-text="pageAttributeTemplate.name + ' (' + pageAttributeTemplate.field_type + ')'"></span>
                 <div class="d-inline-block ml-auto">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item" :class="[isEditing(pageAttributeTemplate.id) ? 'd-flex' : 'd-none']">
+            <div class="item border p-3" :class="[isEditing(pageAttributeTemplate.id) ? 'd-flex' : 'd-none']">
                 <div class="input-group">
                     <input type="text" class="form-control" :value="editing.value" @input="change($event)">
                     <div class="input-group-append">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <vue-webmixx-page-attribute-templates class="item-sub" :parent-page-attribute-template-id="pageAttributeTemplate.id" :list="pageAttributeTemplate.page_attribute_templates" />
+            <vue-webmixx-page-attribute-templates class="item-sub ms-3" :parent-page-attribute-template-id="pageAttributeTemplate.id" :list="pageAttributeTemplate.page_attribute_templates" />
         </div>
     </draggable>
 </template>
@@ -141,17 +141,6 @@ export default {
 </script>
 
 <style scoped>
-    .item-container {
-        margin: 0;
-    }
-    .item {
-        padding: 1rem;
-        border: solid black 1px;
-        background-color: #fefefe;
-    }
-    .item-sub {
-        margin: 0 0 0 1rem;
-    }
     .btn.handle {
         cursor: move;
     }

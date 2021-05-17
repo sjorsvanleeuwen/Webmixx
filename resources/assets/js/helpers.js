@@ -1,4 +1,5 @@
 import ClassicEditor from 'ckeditor5-classic-plus';
+import Choices from "choices.js";
 
 const functions = {
     bootEditor() {
@@ -8,6 +9,12 @@ const functions = {
                 console.log(error);
             });
         }
+    },
+    bootChoices() {
+        let selects = document.querySelectorAll("select[multiple]");
+        selects.forEach(function(select) {
+            new Choices(select);
+        });
     },
     getEditorConfig() {
         return {
@@ -44,9 +51,6 @@ const functions = {
             }
         };
     },
-    namespaceComponents(namespace, components) {
-        return Object.fromEntries(Object.entries(components).map(([key, value]) => [`${namespace}:${key}`, value]));
-    }
 };
 
 export default function() {
@@ -61,6 +65,6 @@ export function getEditorConfig() {
     return functions.getEditorConfig();
 }
 
-export function namespaceComponents(namespace, components) {
-    return functions.namespaceComponents(namespace, components);
+export function bootChoices() {
+    return functions.bootChoices();
 }

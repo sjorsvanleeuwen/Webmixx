@@ -14,14 +14,12 @@ export default function() {
 
     Vue.use(CKEditor);
 
-    if ($('#app').hasClass('no-vue') === false) {
-        bootstrapPages();
-        bootstrapPageTemplates();
-        bootstrapMenus();
+    bootstrapPages();
+    bootstrapPageTemplates();
+    bootstrapMenus();
 
-        new Vue({
-            el: '#app',
-            store: Store,
-        });
-    }
+    new Vue({
+        el: '#app',
+        store: Store,
+    });
 };
