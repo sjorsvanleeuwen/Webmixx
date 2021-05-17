@@ -1,23 +1,25 @@
 <template>
-    <div class="modal" tabindex="-1">
+    <div class="modal fade" tabindex="-1" aria-labelledby="menuItemSelectModalHeader" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add menu item</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="menuItemSelectModalHeader">Add menu item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="form-group row">
-                            <label for="name" class="col-3 col-form-label">Name</label>
+                        <div class="row g-3 mb-3">
+                            <div class="col-3">
+                                <label for="name" class="col-form-label">Name</label>
+                            </div>
                             <div class="col-9">
                                 <input type="text" id="name" name="name" v-model="name" class="form-control ">
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="link_type" class="col-3 col-form-label">Link Type</label>
+                        <div class="row g-3 mb-3">
+                            <div class="col-3">
+                                <label for="link_type" class="col-form-label">Link Type</label>
+                            </div>
                             <div class="col-9">
                                 <select id="link_type" name="link_type" v-model="link_type" class="form-control" @change="loadLinkTypeModels">
                                     <option value="" disabled="disabled">Please Select</option>
@@ -25,8 +27,10 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row" v-if="link_type !== ''">
-                            <label for="link_type" class="col-3 col-form-label">Link Model</label>
+                        <div class="row g-3 mb-3" v-if="link_type !== ''">
+                            <div class="col-3">
+                                <label for="link_type" class="col-form-label">Link Model</label>
+                            </div>
                             <div class="col-9">
                                 <select id="link_id" name="link_id" v-model="link_id" class="form-control">
                                     <option value="" disabled="disabled">Please Select</option>
@@ -37,7 +41,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" @click="save">Save</button>
                 </div>
             </div>
@@ -47,6 +51,7 @@
 
 <script>
 import {mapGetters} from "vuex";
+import {Modal} from "bootstrap";
 
 export default {
     name: "menuItemSelect",
@@ -63,7 +68,7 @@ export default {
     },
 
     mounted() {
-        $(this.$el).on('hidden.bs.modal', this.reset);
+        this.$el.addEventListener('hidden.bs.modal', this.reset);
     },
 
     data() {
@@ -92,7 +97,7 @@ export default {
                 link_id: this.link_id,
                 name: this.name,
             }).then(() => {
-                $(this.$el).modal('hide');
+                Modal.getInstance(this.$el).hide();
             });
         },
         reset() {

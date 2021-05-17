@@ -21,5 +21,5 @@
 @elseif($pageAttributeTemplate->field_type === \SjorsvanLeeuwen\Webmixx\ValueObjects\FieldTypes::MODULE_ITEM)
     {!! '@@dump(' . $base . '->' . $pageAttributeTemplate->slug  . ')' !!}
 @else
-    {{ '{{' }} {{ $base }}->{{ $pageAttributeTemplate->slug }} {!! '}}' !!}
+    {!! '&#123;&#123;' !!} {{ $base }}->{{ $pageAttributeTemplate->slug }} {!! '&#125;&#125;' !!}
 @endif

@@ -1,11 +1,14 @@
 <x-webmixx::layout>
     <x-webmixx::title-header>
         <x-slot name="buttons">
-            <a href="{{ route('webmixx.pages.create') }}" class="btn btn-sm btn-outline-success"><i class="fas fa-plus"></i></a>
+            <a href="{{ route('webmixx.page.create') }}" class="btn btn-sm btn-outline-success"><i class="fas fa-plus"></i></a>
         </x-slot>
         Pages
     </x-webmixx::title-header>
     <table class="table">
+        <caption>
+            {!! $pages->links() !!}
+        </caption>
         <thead>
         <tr>
             <th>Name</th>
@@ -22,10 +25,10 @@
                 <td>
                     {{ $page->pageTemplate->name }}
                 </td>
-                <td class="col-auto text-right">
-                    <a class="btn btn-sm btn-outline-primary" href="{{ route('webmixx.pages.edit', $page) }}"><i class="far fa-edit"></i></a>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('webmixx.page.edit', $page) }}"><i class="far fa-edit"></i></a>
                     <x-webmixx::post-link>
-                        <x-slot name="url">{{ route('webmixx.pages.destroy', $page) }}</x-slot>
+                        <x-slot name="url">{{ route('webmixx.page.destroy', $page) }}</x-slot>
                         <x-slot name="method">delete</x-slot>
                         <x-slot name="classes">btn btn-sm btn-outline-danger</x-slot>
                         <i class="fas fa-trash-alt"></i>
@@ -35,12 +38,5 @@
             </tr>
         @endforeach
         </tbody>
-        <tfoot>
-        <tr>
-            <td colspan="3">
-                {!! $pages->links() !!}
-            </td>
-        </tr>
-        </tfoot>
     </table>
 </x-webmixx::layout>

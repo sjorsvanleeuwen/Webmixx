@@ -1,7 +1,9 @@
 <template>
-    <div class="form-group row">
-        <label :for="name" v-text="label" class="col-3 col-form-label"></label>
-        <div class="col-9">
+    <div class="row g-3 mb-3">
+        <div class="col-2">
+            <label :for="name" v-text="label" class="col-form-label" />
+        </div>
+        <div class="col-10">
             <textarea class="form-control" :id="name" :name="name" rows="3">{{ $value }}</textarea>
         </div>
     </div>
@@ -9,7 +11,7 @@
 
 <script>
 export default {
-    name: "type-text",
+    name: 'vue-type-text',
 
     props: {
         name: {

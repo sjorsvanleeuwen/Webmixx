@@ -25,8 +25,8 @@ Route::group([
     ],
 ], function (): void {
     Route::view('dashboard', 'webmixx::dashboard')->name('dashboard');
-    Route::resource('menus', MenuController::class);
-    Route::resource('pages', PageController::class);
-    Route::resource('page_templates', PageTemplateController::class);
+    Route::resource('menu', MenuController::class);
+    Route::resource('page', PageController::class);
+    Route::resource('page_template', PageTemplateController::class);
     Route::get('preview/{module}/{id}', [FrontController::class, 'preview'])->name('preview');
 });

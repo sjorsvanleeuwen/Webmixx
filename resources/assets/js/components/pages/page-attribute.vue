@@ -1,10 +1,10 @@
 <template>
-    <div :class="'row field-' + pageAttributeTemplate.field_type" :data-bound-by="'attributeTemplate' + pageAttributeTemplate.id">
+    <div class="row g-3" :class="classObject">
         <div class="col">
-            <vue-webmixx-pages-attribute-template v-if="childPageAttributeTemplates.length > 0" v-for="childPageAttributeTemplate in childPageAttributeTemplates" v-bind:key="childPageAttributeTemplate.id" :page-attribute-template="childPageAttributeTemplate" :page-attribute="pageAttribute" :base-name="fieldName"/>
+            <vue-page-attribute-template v-if="childPageAttributeTemplates.length > 0" v-for="childPageAttributeTemplate in childPageAttributeTemplates" v-bind:key="childPageAttributeTemplate.id" :page-attribute-template="childPageAttributeTemplate" :page-attribute="pageAttribute" :base-name="fieldName"/>
             <component v-bind:is="fieldTypeComponent" v-if="childPageAttributeTemplates.length === 0" :name="fieldName" :label="pageAttributeTemplate.name" :value="pageAttribute.value" :page-attribute-template="pageAttributeTemplate" />
         </div>
-        <div v-if="pageAttributeTemplate.repeatable" class="col-auto text-right">
+        <div v-if="pageAttributeTemplate.repeatable" class="col-auto text-end">
             <span class="btn btn-sm btn-link handle"><i class="fas fa-arrows-alt"></i></span>
             <span class="btn btn-sm btn-outline-danger" @click="removePageAttribute"><i class="fas fa-trash-alt"></i></span>
         </div>
@@ -14,7 +14,6 @@
 <script>
 import _ from 'lodash';
 import {mapGetters} from 'vuex';
-import {namespaceComponents} from "../../helpers";
 
 import TypeImage from '../field_types/type-image';
 import TypeModuleItem from '../field_types/type-module-item';
@@ -25,16 +24,14 @@ import TypeText from '../field_types/type-text';
 
 export default {
     components: {
-        ...namespaceComponents('fieldTypes', {
-            'typeImage': TypeImage,
-            'typeModuleItem': TypeModuleItem,
-            'typeModuleSet': TypeModuleSet,
-            'typeRichText': TypeRichText,
-            'typeString': TypeString,
-            'typeText': TypeText,
-        }),
+        'vue-type-image': TypeImage,
+        'vue-type-module-item': TypeModuleItem,
+        'vue-type-module-set': TypeModuleSet,
+        'vue-type-rich-text': TypeRichText,
+        'vue-type-string': TypeString,
+        'vue-type-text': TypeText,
     },
-    name: "vue-webmixx-pages-attribute",
+    name: 'vue-page-attribute',
 
     props: {
         pageAttributeTemplate: {
@@ -42,14 +39,8 @@ export default {
             type: Object,
         },
         pageAttribute: {
-            required: false,
+            required: true,
             type: Object,
-            default: function () {
-                return {
-                    id: null,
-                    page_attribute_template_id: this.pageAttributeTemplate.id,
-                };
-            },
         },
         baseName: {
             required: true,
@@ -84,7 +75,17 @@ export default {
             return this.baseName + '[' + this.pageAttributeTemplate.id + ']';
         },
         fieldTypeComponent() {
-            return 'fieldTypes:type' + _.replace(_.startCase(this.pageAttributeTemplate.field_type), ' ', '');
+            return 'vue-type-' + _.replace(this.pageAttributeTemplate.field_type, '_', '-');
+        },
+        classObject() {
+            let classes = {
+                'mb-3': this.pageAttributeTemplate.repeatable === false || this.pageAttribute.order === 0,
+                'my-3': this.pageAttributeTemplate.repeatable === true && this.pageAttribute.order > 0,
+                border: this.pageAttributeTemplate.field_type === 'compound',
+                rounded: this.pageAttributeTemplate.field_type === 'compound',
+            };
+            classes['field-' + _.replace(this.pageAttributeTemplate.field_type, '_', '-')] = true;
+            return classes;
         }
     },
 }
@@ -93,11 +94,8 @@ export default {
 <style scoped>
     .field-compound {
         padding: 7px 0;
-        border: 1px solid var(--secondary);
-        border-radius: 7px;
-        margin-bottom: 7px;
     }
-    .btn .handle {
+    .btn.handle {
         cursor: move;
     }
 </style>
