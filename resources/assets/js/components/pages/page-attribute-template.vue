@@ -1,13 +1,15 @@
 <template>
     <div :id="'attributeTemplate' + pageAttributeTemplate.id" :class="{ repeatable: pageAttributeTemplate.repeatable }">
-        <div class="row" v-if="pageAttributeTemplate.field_type === 'compound'">
-            <label v-text="pageAttributeTemplate.name" class="col-12 col-form-label"></label>
+        <div class="row g-3 mb-3" v-if="pageAttributeTemplate.field_type === 'compound'">
+            <div class="12">
+                <label v-text="pageAttributeTemplate.name" class="col-form-label"></label>
+            </div>
         </div>
-        <draggable v-if="pageAttributeTemplate.repeatable" v-model="ownedPageAttributes" class="col-12">
-            <vue-webmixx-pages-attribute v-for="childPageAttribute in ownedPageAttributes" :page-attribute="childPageAttribute" :key="childPageAttribute.id" :page-attribute-template="pageAttributeTemplate" :base-name="baseName"/>
+        <draggable v-if="pageAttributeTemplate.repeatable" v-model="ownedPageAttributes" class="col mx-3">
+            <vue-page-attribute v-for="childPageAttribute in ownedPageAttributes" :page-attribute="childPageAttribute" :key="childPageAttribute.id" :page-attribute-template="pageAttributeTemplate" :base-name="baseName"/>
         </draggable>
-        <vue-webmixx-pages-attribute v-else v-for="childPageAttribute in ownedPageAttributes" :page-attribute="childPageAttribute" :key="childPageAttribute.id" :page-attribute-template="pageAttributeTemplate" :base-name="baseName"/>
-        <div v-if="pageAttributeTemplate.repeatable" class="form-group text-right">
+        <vue-page-attribute v-else v-for="childPageAttribute in ownedPageAttributes" :page-attribute="childPageAttribute" :key="childPageAttribute.id" :page-attribute-template="pageAttributeTemplate" :base-name="baseName"/>
+        <div v-if="pageAttributeTemplate.repeatable" class="form-group text-end">
             <span class="btn btn-sm btn-outline-success" @click="addPageAttribute">
                 <i class="fas fa-plus"></i> {{ pageAttributeTemplate.name}}
             </span>
@@ -21,7 +23,7 @@ import {mapGetters} from 'vuex';
 import draggable from 'vuedraggable';
 
 export default {
-    name: "vue-webmixx-pages-attribute-template",
+    name: 'vue-page-attribute-template',
 
     components: {
         draggable,
@@ -69,7 +71,7 @@ export default {
                 page_attribute_template_id: this.pageAttributeTemplate.id,
                 page_attribute_id: this.pageAttribute.id,
                 order: this.ownedPageAttributes.length,
-                value: this.pageAttributeTemplate.field_type === 'module-set' ? this.pageAttributeTemplate.data_provider : null,
+                value: this.pageAttributeTemplate.field_type === 'module_set' ? this.pageAttributeTemplate.data_provider : null,
             });
         },
     },

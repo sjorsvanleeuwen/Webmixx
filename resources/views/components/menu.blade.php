@@ -10,17 +10,17 @@
             </li>
             @can('viewAny', \SjorsvanLeeuwen\Webmixx\Models\Menu::class)
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('webmixx.menus.index') }}">Menus</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('webmixx.menu.index') }}">Menus</a>
                 </li>
             @endcan
             @can('viewAny', \SjorsvanLeeuwen\Webmixx\Models\Page::class)
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('webmixx.pages.index') }}">Pages</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('webmixx.page.index') }}">Pages</a>
                 </li>
             @endcan
             @can('viewAny', \SjorsvanLeeuwen\Webmixx\Models\PageTemplate::class)
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('webmixx.page_templates.index') }}">Page Templates</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('webmixx.page_template.index') }}">Page Templates</a>
                 </li>
             @endcan
         </ul>

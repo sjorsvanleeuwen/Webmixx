@@ -5,7 +5,7 @@ import PageForm from './page-form';
 import Vue from 'vue';
 
 export default () => {
-    Vue.component('vue-webmixx-pages-attribute-template', PageAttributeTemplate);
-    Vue.component('vue-webmixx-pages-attribute', PageAttribute);
-    Vue.component('vue-webmixx-pages-form', PageForm);
+    Vue.component('vue-page-attribute-template', PageAttributeTemplate);
+    Vue.component('vue-page-attribute', PageAttribute);
+    Vue.component('vue-page-form', PageForm);
 };

@@ -4,6 +4,8 @@ import vueBootstrap from './vue_bootstrap';
 
 Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-vueBootstrap();
+if (document.getElementById('app').classList.contains('no-vue') === false) {
+    vueBootstrap();
+}
 bootEditor();
 bootChoices();

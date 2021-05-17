@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "type-module-set",
+    name: 'vue-type-module-set',
     props: {
         name: {
             required: true,

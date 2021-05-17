@@ -51,9 +51,6 @@ const functions = {
             }
         };
     },
-    namespaceComponents(namespace, components) {
-        return Object.fromEntries(Object.entries(components).map(([key, value]) => [`${namespace}:${key}`, value]));
-    }
 };
 
 export default function() {
@@ -66,10 +63,6 @@ export function bootEditor() {
 
 export function getEditorConfig() {
     return functions.getEditorConfig();
-}
-
-export function namespaceComponents(namespace, components) {
-    return functions.namespaceComponents(namespace, components);
 }
 
 export function bootChoices() {

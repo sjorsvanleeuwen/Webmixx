@@ -1,7 +1,9 @@
 <template>
-    <div class="form-group row">
-        <label :for="name" v-text="label" class="col-3 col-form-label"></label>
-        <div class="col-9">
+    <div class="row g-3 mb-3">
+        <div class="col-2">
+            <label :for="name" v-text="label" class="col-3 col-form-label" />
+        </div>
+        <div class="col-10">
             <input v-if="value" type="hidden" :name="name" :value="value"/>
             <input type="file" class="form-control-file" :id="name" :name="name"/>
         </div>
@@ -10,7 +12,7 @@
 
 <script>
 export default {
-    name: "type-image",
+    name: 'vue-type-image',
 
     props: {
         name: {

@@ -1,7 +1,9 @@
 <template>
-    <div class="form-group row">
-        <label :for="name" v-text="label" class="col-3 col-form-label"></label>
-        <div class="col-9">
+    <div class="row g-3 mb-3">
+        <div class="col-2">
+            <label :for="name" v-text="label" class="col-form-label" />
+        </div>
+        <div class="col-10">
             <select :id="name" :name="name" v-model="value" class="form-control">
                 <option :value="null" disabled="disabled">Please Select</option>
                 <option v-for="module_item in module_items" :value="module_item.id">{{ module_item.name }}</option>
@@ -12,7 +14,7 @@
 
 <script>
 export default {
-    name: "type-module-item",
+    name: 'vue-type-module-item',
 
     props: {
         name: {

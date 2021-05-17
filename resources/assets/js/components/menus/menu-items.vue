@@ -9,27 +9,25 @@
         @change="log"
     >
         <div class="item-group" :key="menuItem.id" v-for="menuItem in realValue">
-            <div class="item" :class="[isEditing(menuItem.id) ? 'd-none' : 'd-flex']">
-                <span class="btn btn-link handle" title="Move"><i class="fas fa-arrows-alt"></i></span>
+            <div class="item border p-1 align-items-center" :class="[isEditing(menuItem.id) ? 'd-none' : 'd-flex']">
+                <span class="btn btn-sm btn-link handle" title="Move"><i class="fas fa-arrows-alt"></i></span>
                 <input type="text" readonly class="form-control-plaintext" :value="menuItem.name">
                 <input type="hidden" :name="parentName + '[' + menuItem.id + '][id]'" :value="menuItem.id">
                 <div class="d-inline-block ml-auto">
                     <div class="btn-group" role="group">
-                        <span v-if="menuItem.actions.update" class="btn btn-outline-success" @click="startEdit(menuItem)" title="Edit"><i class="fas fa-pencil-alt"></i></span>
-                        <span v-if="menuItem.actions.delete" class="btn btn-outline-danger" @click="deleteMenuItem(menuItem)" title="Delete"><i class="fas fa-trash-alt"></i></span>
+                        <span v-if="menuItem.actions.update" class="btn btn-sm btn-outline-success" @click="startEdit(menuItem)" title="Edit"><i class="fas fa-pencil-alt"></i></span>
+                        <span v-if="menuItem.actions.delete" class="btn btn-sm btn-outline-danger" @click="deleteMenuItem(menuItem)" title="Delete"><i class="fas fa-trash-alt"></i></span>
                     </div>
                 </div>
             </div>
-            <div class="item" :class="[isEditing(menuItem.id) ? 'd-flex' : 'd-none']">
+            <div class="item border p-2 align-items-center" :class="[isEditing(menuItem.id) ? 'd-flex' : 'd-none']">
                 <div class="input-group">
-                    <input type="text" class="form-control" :value="editing.value" @input="change($event)">
-                    <div class="input-group-append">
-                        <span class="btn btn-outline-success" @click="finishEdit(menuItem)" title="Save"><i class="fas fa-check"></i></span>
-                        <span class="btn btn-outline-danger" @click="cancelEdit" title="Cancel"><i class="fas fa-times"></i></span>
-                    </div>
+                    <input type="text" class="form-control form-control-sm" :value="editing.value" @input="change($event)">
+                    <span class="btn btn-sm btn-outline-success" @click="finishEdit(menuItem)" title="Save"><i class="fas fa-check"></i></span>
+                    <span class="btn btn-sm btn-outline-danger" @click="cancelEdit" title="Cancel"><i class="fas fa-times"></i></span>
                 </div>
             </div>
-            <menu-items class="item-sub" :parentMenuItemId="menuItem.id" :list="menuItem.menu_items" :parentName="parentName + '[' + menuItem.id + '][menu_items]'" />
+            <menu-items class="item-sub ms-3" :parentMenuItemId="menuItem.id" :list="menuItem.menu_items" :parentName="parentName + '[' + menuItem.id + '][menu_items]'" />
         </div>
     </draggable>
 </template>
@@ -145,18 +143,6 @@ export default {
 </script>
 
 <style scoped>
-    .item-container {
-        max-width: 30rem;
-        margin: 0;
-    }
-    .item {
-        padding: 1rem;
-        border: solid black 1px;
-        background-color: #fefefe;
-    }
-    .item-sub {
-        margin: 0 0 0 1rem;
-    }
     .btn.handle {
         cursor: move;
     }

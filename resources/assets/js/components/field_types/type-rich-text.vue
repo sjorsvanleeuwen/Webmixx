@@ -1,9 +1,11 @@
 <template>
-    <div class="form-group row">
-        <label :for="name" v-text="label" class="col-3 col-form-label"></label>
-        <div class="col-9">
-            <ckeditor :editor="editor" v-model="editorValue" :config="editorConfig"></ckeditor>
-            <input type="text" class="d-none" :id="name" :name="name" :value="internalValue"/>
+    <div class="row g-3 mb-3">
+        <div class="col-2">
+            <label :for="name" v-text="label" class="col-form-label" />
+        </div>
+        <div class="col-10">
+            <ckeditor :editor="editor" v-model="editorValue" :config="editorConfig" />
+            <input type="text" class="d-none" :id="name" :name="name" :value="internalValue" />
         </div>
     </div>
 </template>
@@ -13,7 +15,7 @@ import ClassicEditor from 'ckeditor5-classic-plus';
 import { getEditorConfig } from "../../helpers";
 
 export default {
-    name: "type-rich-text",
+    name: 'vue-type-rich-text',
 
     props: {
         name: {

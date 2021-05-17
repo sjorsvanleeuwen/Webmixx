@@ -12,7 +12,7 @@
 </head>
 <body>
     <x-webmixx::menu />
-    <div class="container" id="app">
+    <div class="container @if(isset($withoutVue) && $withoutVue === true) no-vue @endif" id="app">
         {!! $slot !!}
     </div>
     <script src="/vendor/webmixx/js/manifest.js" defer></script>
