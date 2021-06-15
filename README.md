@@ -16,7 +16,7 @@ Build your templates, create your Pages and put them in a Menu.
 Install it as usual:
 
 ```bash
-composer require sjorsvanleeuwen/webmix
+composer require sjorsvanleeuwen/webmixx
 ```
 
 It should work out of the box in a local environment after you publish the assets for the backend:
