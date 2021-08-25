@@ -18,7 +18,7 @@
         "axios": "^0.21",
         "bootstrap": "^5.1.0",
         "choices.js": "^9.0.1",
-        "ckeditor5-classic-plus": "^1.0.5",
+        "ckeditor5-classic-plus": "^1.0.6",
         "jquery": "^3.6.0",
         "laravel-mix": "^6.0.28",
         "lodash": "^4.17.21",
