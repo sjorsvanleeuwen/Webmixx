@@ -20,7 +20,7 @@
         "choices.js": "^9.0.1",
         "ckeditor5-classic-plus": "^1.0.8",
         "jquery": "^3.6.0",
-        "laravel-mix": "^6.0.29",
+        "laravel-mix": "^6.0.34",
         "lodash": "^4.17.21",
         "postcss": "^8.3.9",
         "resolve-url-loader": "^4.0.0",
