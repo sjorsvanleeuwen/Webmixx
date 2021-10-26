@@ -6,7 +6,9 @@
         Page Templates
     </x-webmixx::title-header>
     <table class="table">
-        <caption>{!! $pageTemplates->links() !!}</caption>
+        <caption>
+            {!! $pageTemplates->links() !!}
+        </caption>
         <thead>
             <tr>
                 <th>Name</th>

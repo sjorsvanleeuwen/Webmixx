@@ -3,3 +3,7 @@
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 @import '~bootstrap/scss/bootstrap';
 @import '~choices.js/src/styles/choices';
+
+table.table > caption, table.table > thead {
+    border-top: none !important;
+}
