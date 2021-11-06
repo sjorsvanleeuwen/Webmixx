@@ -15,6 +15,9 @@
     <div class="container @if(isset($withoutVue) && $withoutVue === true) no-vue @endif" id="app">
         {!! $slot !!}
     </div>
+    <div class="lh-lg position-fixed bottom-0 w-100 text-center bg-dark text-light">
+        Powered by Webmixx
+    </div>
     <script src="/vendor/webmixx/js/manifest.js" defer></script>
     <script src="/vendor/webmixx/js/vendor.js" defer></script>
     <script src="/vendor/webmixx/js/webmixx.js" defer></script>
