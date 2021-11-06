@@ -33,7 +33,6 @@
                         <x-slot name="classes">btn btn-sm btn-outline-danger</x-slot>
                         <i class="fas fa-trash-alt"></i>
                     </x-webmixx::post-link>
-
                 </td>
             </tr>
         @endforeach
