@@ -43,7 +43,7 @@ class PageTemplateController extends BaseController
 
         $pageTemplate->save();
 
-        return redirect()->route('webmixx.page_templates.index');
+        return redirect()->route('webmixx.page_template.index');
     }
 
     public function show(PageTemplate $pageTemplate): ViewContract
@@ -71,7 +71,7 @@ class PageTemplateController extends BaseController
 
         $pageTemplate->save();
 
-        return redirect()->route('webmixx.page_templates.index');
+        return redirect()->route('webmixx.page_template.index');
     }
 
     public function destroy(PageTemplate $pageTemplate): RedirectResponse
@@ -83,6 +83,6 @@ class PageTemplateController extends BaseController
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         $pageTemplate->delete();
 
-        return redirect()->route('webmixx.page_templates.index');
+        return redirect()->route('webmixx.page_template.index');
     }
 }

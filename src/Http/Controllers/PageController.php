@@ -14,7 +14,6 @@ use Illuminate\Support\Str;
 use SjorsvanLeeuwen\Webmixx\Http\Requests\CreatePageRequest;
 use SjorsvanLeeuwen\Webmixx\Http\Requests\EditPageRequest;
 use SjorsvanLeeuwen\Webmixx\Models\Page;
-use SjorsvanLeeuwen\Webmixx\Models\PageTemplate;
 use SjorsvanLeeuwen\Webmixx\ValueObjects\FieldTypes;
 use SjorsvanLeeuwen\Webmixx\Webmixx;
 
@@ -62,7 +61,7 @@ class PageController extends BaseController
             $this->saveAttribute($page, $pageAttributeTemplates, $pageAttributeTemplateId, $value);
         }
 
-        return redirect()->route('webmixx.pages.index');
+        return redirect()->route('webmixx.page.index');
     }
 
     public function show(Page $page): RedirectResponse
@@ -105,7 +104,7 @@ class PageController extends BaseController
         $page->pageAttributes()->whereIn('id', $oldAttributeIds)->delete();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        return redirect()->route('webmixx.pages.index');
+        return redirect()->route('webmixx.page.index');
     }
 
     public function destroy(Page $page): RedirectResponse
@@ -117,7 +116,7 @@ class PageController extends BaseController
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         $page->delete();
 
-        return redirect()->route('webmixx.pages.index');
+        return redirect()->route('webmixx.page.index');
     }
 
     /**

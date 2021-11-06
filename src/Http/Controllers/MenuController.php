@@ -44,7 +44,7 @@ class MenuController extends BaseController
 
         $menu->save();
 
-        return redirect()->route('webmixx.menus.index');
+        return redirect()->route('webmixx.menu.index');
     }
 
     public function show(Menu $menu): ViewContract
