@@ -50,7 +50,7 @@ export default {
     },
 
     beforeMount() {
-        this.$store.dispatch('page_templates/index')
+        this.$store.dispatch('page_templates/index', {page_id: this.pageId})
             .then(() => {
                 if (this.pageId !== null) {
                     this.$store.dispatch('pages/show', {id: this.pageId})

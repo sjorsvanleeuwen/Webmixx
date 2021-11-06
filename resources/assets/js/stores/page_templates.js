@@ -37,9 +37,15 @@ export default {
         },
     }),
     actions: {
-        index ({commit}) {
+        index ({commit}, payload) {
             return new Promise((resolve, reject) => {
-                Axios.get('/webmixx/api/page_template')
+                let url = new URL('/webmixx/api/page_template', window.location.origin);
+
+                if (payload.hasOwnProperty('page_id') && payload.page_id !== null) {
+                    url.searchParams.append('exclude_page_id', payload.page_id);
+                }
+
+                Axios.get(url.href)
                     .then((response) => {
                         commit('load', response.data.data);
                         resolve(response.data.data);

@@ -76,9 +76,9 @@ export default {
         },
         httpUrl() {
             if (this.pageTemplateId === null) {
-                return '/webmixx/page_templates';
+                return '/webmixx/page_template';
             }
-            return '/webmixx/page_templates/' + this.pageTemplateId;
+            return '/webmixx/page_template/' + this.pageTemplateId;
         },
         pageAttributeTemplates: {
             get() {
