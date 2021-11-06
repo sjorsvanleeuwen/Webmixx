@@ -19,7 +19,7 @@
             </div>
         </fieldset>
         <div class="form-group">
-            <a href="/webmixx/page_templates" class="btn btn-secondary">Cancel</a>
+            <a href="/webmixx/page_template" class="btn btn-secondary">Cancel</a>
             <button type="submit" name="save" value="save" class="btn btn-primary">Save</button>
         </div>
         <h3 class="d-flex my-3 justify-content-between align-items-center">
