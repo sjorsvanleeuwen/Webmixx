@@ -20,7 +20,7 @@
         "choices.js": "^10.0.0",
         "ckeditor5-classic-plus": "^33.0.0",
         "jquery": "^3.6.0",
-        "laravel-mix": "^6.0.43",
+        "laravel-mix": "^6.0.49",
         "lodash": "^4.17.21",
         "postcss": "^8.4.12",
         "resolve-url-loader": "^5.0.0",
@@ -30,7 +30,7 @@
         "vue-loader": "^17.0.0",
         "vue-template-compiler": "^2.6.14",
         "vuedraggable": "^2.24.3",
-        "vuex": "^3.6.2"
+        "vuex": "^4.0.2"
     },
     "repository": {
         "type": "git",
