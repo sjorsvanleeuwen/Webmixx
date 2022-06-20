@@ -13,7 +13,7 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "devDependencies": {
-        "@ckeditor/ckeditor5-vue2": "^1.0.5",
+        "@ckeditor/ckeditor5-vue2": "^3.0.1",
         "@fortawesome/fontawesome-free": "^5.15.4",
         "axios": "^0.27",
         "bootstrap": "^5.1.3",
